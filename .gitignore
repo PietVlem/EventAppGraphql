@@ -1,4 +1,4 @@
 #server
 server/node_modules
-server/services-account.json
+server/service-account.json
 server/dist/service-account.json
