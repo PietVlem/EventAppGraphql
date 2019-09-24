@@ -4,6 +4,7 @@ import services from './services';
 export default {
     Query: {
         events: () => services.getEvents(),
+        products: () => services.getProducts(),
     },
     Event: {
         async location(event) {

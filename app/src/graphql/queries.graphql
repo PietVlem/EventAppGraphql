@@ -1,0 +1,18 @@
+query getEvents {
+    events {
+        id
+        name
+        date
+        start
+        end
+        facebook
+        details
+        image
+        location{
+            name
+            city
+            zipcode
+            country
+        }
+    }
+}

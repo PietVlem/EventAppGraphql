@@ -10,6 +10,7 @@ const typeDefs = gql`
   }
 
   type Event {
+    id: String
     name: String
     date: String
     start: String
@@ -17,16 +18,18 @@ const typeDefs = gql`
     facebook: String
     details: String
     location: Location
-    #image: String
+    image: String
   }
 
-  type Drink {
+  type Product {
     name: String
     price: Float
+    image: String
   }
 
   type Query {
-    events: [Event]
+    events: [Event],
+    products: [Product]
   }
 `;
 

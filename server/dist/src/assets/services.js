@@ -40,6 +40,15 @@ function getEvents() {
         return events.docs.map(event => event.data());
     });
 }
+function getProducts() {
+    return __awaiter(this, void 0, void 0, function* () {
+        const products = yield firebase_admin_1.default
+            .firestore()
+            .collection('Products')
+            .get();
+        return products.docs.map(product => product.data());
+    });
+}
 function getEventLocation(locationId) {
     return __awaiter(this, void 0, void 0, function* () {
         const eventLocation = yield firebase_admin_1.default
@@ -56,5 +65,6 @@ Export
 exports.default = {
     getEvents,
     getEventLocation,
+    getProducts,
 };
 //# sourceMappingURL=services.js.map

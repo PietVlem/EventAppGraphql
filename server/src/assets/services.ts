@@ -13,13 +13,15 @@ admin.initializeApp({
 Interfaces
 */
 interface Event {
-    name: string
-    date: string
-    start: string
-    end: string
-    facebook: string
-    details: string
-    locationID: string
+    id: String
+    name: String
+    date: String
+    start: String
+    end: String
+    facebook: String
+    details: String
+    location: String
+    image: String
 }
 
 interface Location {
@@ -27,6 +29,12 @@ interface Location {
     city: String
     zipcode: String
     country: String
+}
+
+interface Product {
+    name: String
+    price: Number
+    image: String
 }
 
 /*
@@ -38,6 +46,14 @@ async function getEvents() {
         .collection('Events')
         .get();
     return events.docs.map(event => event.data()) as Event[];
+}
+
+async function getProducts(){
+    const products = await admin
+        .firestore()
+        .collection('Products')
+        .get();
+    return products.docs.map(product => product.data()) as Product[];
 }
 
 async function getEventLocation(locationId) {
@@ -55,4 +71,5 @@ Export
 export default {
     getEvents,
     getEventLocation,
+    getProducts,
 }

@@ -17,6 +17,7 @@ const services_1 = __importDefault(require("./services"));
 exports.default = {
     Query: {
         events: () => services_1.default.getEvents(),
+        products: () => services_1.default.getProducts(),
     },
     Event: {
         location(event) {
