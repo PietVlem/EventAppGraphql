@@ -5,6 +5,7 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 Constants
 */
 import colors from '../constants/colors';
+import styles from '../constants/style';
 
 /*
 Interfaces
@@ -32,8 +33,8 @@ const eventSmall = React.memo(({ eventDetails, navigateDetails }: EventDetailPro
                 <Text style={stylesheet.day}>{day}</Text>
             </View>
             <View style={stylesheet.textContainer}>
-                <Text>Start: {eventDetails.start}</Text>
-                <Text>{eventDetails.name}</Text>
+                <Text style={stylesheet.start}>Start: {eventDetails.start}</Text>
+                <Text style={stylesheet.name}>{eventDetails.name}</Text>
             </View>
         </TouchableOpacity>
     )
@@ -70,7 +71,15 @@ const stylesheet = StyleSheet.create({
     },
     textContainer: {
         padding: 20,
-    }
+    },
+    start:{
+
+    },
+    name:{
+        ...styles.H3,
+        textTransform: "uppercase",
+        fontFamily: 'Raleway-Bold',
+    },
 })
 
 export default eventSmall

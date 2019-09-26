@@ -1,0 +1,579 @@
+/* =============================================================================
+   LAYOUT
+   ========================================================================== */
+html {
+    font-size: 62.5%;
+}
+
+body {
+    @include default-font;
+
+    color: $black;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+.page-wrap {
+    position: relative;
+
+    @media #{$medium} {
+        min-height: 100vh;
+        z-index: 2;
+    }
+}
+
+.container {
+    position: relative;
+    max-width: 1480px;
+    margin: 0 auto;
+    padding: 0 20px;
+
+    @media #{$large} {
+        padding-left: 40px;
+        padding-right: 40px;
+    }
+}
+
+// Typekit async loading (all elements using $ typekit font)
+.wf-loading {
+    overflow: hidden;
+
+    body {
+        visibility: hidden;
+    }
+}
+
+::selection {
+    background-color: $selection;
+    color: inherit;
+}
+
+/* =============================================================================
+   HELPERS
+   ========================================================================== */
+
+// Icons
+.icon {
+    display: inline-block;
+    vertical-align: middle;
+    transition: $transitionDefault;
+}
+
+.icon-hamburger, .icon-hamburger:before, .icon-hamburger:after {
+    width: 24px;
+    position: absolute;
+    left: 0;
+    height: 1px;
+    border-top: 3px solid $accent;
+    transition: $transitionDefault;
+}
+
+.icon-hamburger {
+    position: relative;
+
+    &:before, &:after {
+        content: "";
+        margin-left: 0;
+    }
+
+    &:before {
+        margin-top: 3px;
+    }
+
+    &:after {
+        margin-top: 9px;
+    }
+}
+
+// Exceptions: only add what you need!
+// .mb0.mb0 { margin-bottom: 0; }
+// .mb20.mb20 { margin-bottom: 20px; }
+// .mb40.mb40 { margin-bottom: 40px; }
+
+// .mt0.mt0 { margin-top: 0; }
+// .mt20.mt20 { margin-top: 20px; }
+// .mt40.mt40 { margin-top: 40px; }
+
+// .ttu { text-transform: uppercase; }
+// .ttl { text-transform: lowercase; }
+
+// Google maps mw
+.gm-style img {
+    max-width: inherit;
+}
+
+// Responsive video
+.video-container {
+    position: relative;
+    padding: 0 0 56.25%;
+    height: 0;
+    overflow: hidden;
+    margin: 0 0 15px;
+
+    iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+}
+
+// Equal height
+.equal-h {
+    display: flex;
+    overflow: hidden;
+    flex-wrap: wrap;
+
+    > * {
+        display: flex;
+    }
+
+    &:before, &:after {
+        display: none;
+    }
+}
+
+html.no-flexbox {
+    .equal-h {
+        height: 100%;
+
+        > div {
+            float: left;
+        }
+    }
+}
+
+// Vertical align (not recommended)
+// .va-wrap, .va-m, .va-b { display: table; width: 100%; height: 100%; }
+// .va-wrap { table-layout: fixed; }
+// .va-m, .va-b { display: table-cell; }
+// .va-m { vertical-align: middle; }
+// .va-b { vertical-align: bottom; }
+
+// Block link
+.block-link {
+    position: relative;
+    cursor: pointer;
+}
+
+.block-link__target {
+    &:before {
+        content: "";
+        display: block;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+    }
+}
+
+/* =============================================================================
+   HEADER
+   ========================================================================== */
+
+.page-header {
+    @include clearfix;
+
+    padding: 20px 0;
+}
+
+.page-header__logo {
+    text-decoration: none;
+
+    @include opacity(100);
+
+    float: left;
+
+    img {
+        display: block;
+    }
+
+    &:hover, &:focus {
+        @include opacity(80);
+    }
+}
+
+.main-nav {
+    text-transform: uppercase;
+
+    @include optimize-font;
+
+    color: $black;
+    margin-top: 20px;
+
+    a {
+        text-decoration: none;
+        color: $grayDark;
+        padding: 12px 15px;
+        display: block;
+        border-top: 1px solid $grayLight;
+    }
+
+    a:hover, a:focus, li.active a {
+        color: $black;
+    }
+
+    @media #{$medium} {
+        margin: 35px 0 0 40px;
+        float: left;
+
+        li {
+            float: left;
+            margin: 0 0 0 20px;
+        }
+
+        a {
+            border-top: 0;
+            padding: 0;
+        }
+    }
+
+    @media #{$large} {
+        li {
+            margin-left: 45px;
+        }
+    }
+}
+
+.main-nav__trigger {
+    display: block;
+    position: relative;
+    padding: 12px 20px 12px 55px;
+    background-color: transparent;
+    color: $black;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    border: 1px solid #efefef;
+
+    .icon-hamburger {
+        position: absolute;
+        left: 10px;
+        top: 18px;
+    }
+
+    &:hover, &:focus {
+        background-color: transparent;
+        box-shadow: none;
+    }
+
+    &:active {
+        transform: none;
+    }
+
+    @media #{$medium} {
+        display: none;
+    }
+}
+
+.main-nav__wrap {
+    display: none;
+    margin: 0 0 15px;
+
+    @media #{$medium} {
+        margin: 0 0 0 -20px;
+        display: block;
+    }
+}
+
+.skip-link {
+    left: -999px;
+    position: absolute;
+    top: auto;
+    overflow: hidden;
+    z-index: -999;
+    white-space: nowrap;
+
+    &:focus {
+        top: 0;
+        left: 0;
+        z-index: 999;
+        background-color: #fff;
+        padding: 0.5em 1em;
+
+        @include fs(20);
+    }
+}
+
+/* =============================================================================
+   MAIN
+   ========================================================================== */
+
+.main {
+    padding: 20px 0;
+
+    @media #{$medium} {
+        padding: 50px 0 150px;
+    }
+}
+
+/* =============================================================================
+   FOOTER
+   ========================================================================== */
+
+.page-footer {
+    position: relative;
+
+    .grid {
+        margin-bottom: 0;
+    }
+
+    @media #{$medium} {
+        height: 60px;
+        margin: -60px 0 0;
+        z-index: 5;
+    }
+}
+
+
+/* =============================================================================
+   COMPONENTS
+   ========================================================================== */
+
+// Rte
+.large {
+    @include fs(20);
+}
+
+.center-block {
+    @include clearfix;
+
+    text-align: center;
+    margin: 20px 0;
+
+    .button {
+        float: none;
+        display: inline-block;
+    }
+}
+
+// Article
+section {
+    position: relative;
+}
+
+article {
+    @include clearfix;
+
+    margin: 0 0 20px;
+
+    a {
+        img {
+            display: block;
+
+            @include opacity(100);
+        }
+
+        &:hover, &:focus {
+            img {
+                @include opacity(80);
+            }
+        }
+    }
+}
+
+.article-detail {}
+
+.article-detail__image {
+    margin-bottom: 1.5em;
+}
+
+// Note
+.note {
+    @include clearfix;
+
+    margin: 0 0 20px;
+    padding: 15px 20px 0;
+    background: #efefef;
+
+    ul, p {
+        margin-bottom: 1em;
+    }
+}
+
+.note--success {
+    color: $success;
+    background-color: $successBg;
+}
+
+.note--error {
+    color: $error;
+    background-color: $errorBg;
+}
+
+// Slideshow
+.cycle-slideshow {
+    width: 100%;
+    position: relative;
+}
+
+.cycle-pager {
+    width: 100%;
+    text-align: center;
+
+    span {
+        display: inline-block;
+        margin: 0 3px;
+        font-size: 36px;
+        height: 20px;
+        width: 20px;
+        line-height: 14px;
+        cursor: pointer;
+        border: 2px solid #fff;
+        border-radius: 20px;
+        color: #fff;
+        overflow: hidden;
+        text-indent: -500px;
+        transition: $transitionDefault;
+
+        &:hover, &:focus {
+            transition: none;
+        }
+    }
+
+    span:hover, span:focus, .cycle-pager-active {
+        text-indent: 0;
+    }
+}
+
+// Map
+.map {
+    width: 100%;
+    height: 350px;
+    background: #efefef;
+    margin: 0 0 40px;
+
+    @media #{$medium} {
+        height: 550px;
+    }
+}
+
+// Social
+.social {
+    @include clearfix;
+
+    list-style: none;
+    margin: 0 0 2em -5px;
+}
+
+.social__item {
+    padding: 0 0 5px 5px;
+    float: left;
+}
+
+.social__link {
+    height: 40px;
+    width: 40px;
+    line-height: 40px;
+    display: block;
+    border-radius: 40px;
+    background-color: $accent;
+    text-decoration: none;
+    text-align: center;
+    overflow: hidden;
+}
+
+.social__link--facebook {
+    background-color: #3C5B9B;
+
+    &:hover, &:focus {
+        background-color: darken(#3C5B9B, 8%);
+    }
+}
+
+.social__link--twitter {
+    background-color: #2DAAE1;
+
+    &:hover, &:focus {
+        background-color: darken(#2DAAE1, 8%);
+    }
+}
+
+.social__link--pinterest {
+    background-color: #CB2027;
+
+    &:hover, &:focus {
+        background-color: darken(#CB2027, 8%);
+    }
+}
+
+.social__link--linkedin {
+    background-color: #0173B2;
+
+    &:hover, &:focus {
+        background-color: darken(#0173B2, 8%);
+    }
+}
+
+/* =============================================================================
+   PAGES
+   ========================================================================== */
+
+/* =============================================================================
+   PRINT
+   Inlined to avoid required HTTP connection: h5bp.com/r
+   ========================================================================== */
+@media print {
+    @page {
+        margin: 2cm 0.5cm 1cm;
+    }
+
+    html {
+        font-size: 10px;
+    }
+
+    * {
+        background-color: transparent !important;
+        color: #000 !important;
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
+
+    .ir {
+        text-indent: 0;
+        overflow: visible;
+        direction: inherit;
+    }
+
+    a, a:visited {
+        text-decoration: underline;
+    }
+
+    tr, img {
+        page-break-inside: avoid;
+    }
+
+    img {
+        max-width: 100% !important;
+    }
+
+    .page-footer, .main-nav {
+        display: none;
+    }
+
+    .medium--one-half {
+        width: 50%;
+    }
+
+    .medium--two-thirds {
+        width: 66.66%;
+    }
+
+    .medium--one-third {
+        width: 33.33%;
+    }
+
+    .medium--three-quarters {
+        width: 75%;
+    }
+
+    .medium--one-quarter {
+        width: 25%;
+    }
+}

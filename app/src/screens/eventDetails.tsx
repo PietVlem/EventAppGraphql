@@ -12,6 +12,7 @@ import BackArrowHeader from '../components/backArrowHeader';
 Constants
 */
 import styles from '../constants/style';
+import colors from '../constants/colors';
 
 const eventDetails = ({ navigation }) => {
     const eventDetails = navigation.getParam('eventDetails', '');
@@ -33,10 +34,9 @@ const eventDetails = ({ navigation }) => {
                 <View style={stylesheet.section}>
                     <View style={stylesheet.titleWrapper}>
                         <Emoji name="tada" style={stylesheet.emoji} />
-                        <Text>{eventDetails.name}</Text>
+                        <Text style={styles.H3}>{eventDetails.name}</Text>
                     </View>
-                    
-                    <Text>{eventDetails.details}</Text>
+                    <Text style={styles.p}>{eventDetails.details}</Text>
                 </View>
                 
             </View>
@@ -66,11 +66,14 @@ const stylesheet = StyleSheet.create({
         marginBottom: 40,
     },
     emoji:{
-        fontSize: 25,
+        fontSize: 20,
         marginRight: 20,
     },
     titleWrapper: {
         flexDirection: 'row',
+        borderBottomColor: colors.app_black,
+        borderBottomWidth: 1,
+        paddingBottom: 7,
         marginBottom: 20,
     },
     sectionTitle:{
