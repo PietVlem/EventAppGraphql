@@ -2,3 +2,6 @@
 server/node_modules
 server/service-account.json
 server/dist/service-account.json
+
+#cms
+cms/services/firestore.tsx
