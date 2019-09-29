@@ -1,11 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from '@apollo/react-hooks';
 
-// Components
+/* 
+Components 
+*/
 import Login from './pages/login';
 
-// Style
+/* 
+Router 
+*/
+import AdminRouter from './router/adminRouter';
+
+/* 
+Style 
+*/
 import './sass/index.scss';
 
 const client = new ApolloClient({
@@ -15,24 +24,18 @@ const client = new ApolloClient({
 const App: React.FC = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+  useEffect(() => {
+    const signedIn = localStorage.getItem("signedIn");
+    if (signedIn) return setIsLoggedIn(true);
+  }, [isLoggedIn])
+
   return (
     <ApolloProvider client={client}>
       {!isLoggedIn &&
-        <Login loggingIn={setIsLoggedIn}/>
+        <Login loggingIn={setIsLoggedIn} />
       }
       {isLoggedIn &&
-        <div className="main">
-          <div className="container">
-            <div className="grid">
-              <div className="grid__item medium--one-half">
-                <p>one-half</p>
-              </div>
-              <div className="grid__item medium--one-half">
-                <p>one-half</p>
-              </div>
-            </div>
-          </div>
-        </div>
+        <AdminRouter/>
       }
     </ApolloProvider>
   );

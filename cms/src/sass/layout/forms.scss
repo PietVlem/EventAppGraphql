@@ -86,7 +86,7 @@ form {
   
   // Buttons
   button, input[type="reset"], input[type="submit"], .button {
-    float: left; display: block; clear: both;
+    display: block; clear: both;
     transition: $transitionDefault;
     outline: 0; line-height: 1.2em;
     padding: 12px 20px; margin: 10px 0 0; background-color: $accent;
@@ -195,13 +195,34 @@ form {
       }
     }
   }
+
+  .button--default{
+    
+  }
+
+  .button--primary{
+    svg, span{
+      float: left;
+    }
+    svg{
+      margin-right: 10px;
+    }
+    span{
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1.5;
+      text-decoration: none;
+      text-transform: none;
+    }
+  }
   
   .a-c {
     .button, a.button, button {
       float: none; clear: none; display: inline-block;
     }
   }
-  
-  // Recaptcha
-  .grecaptcha-badge { display: none; }
-  
+
+
+.form-group{
+  margin-bottom: 20px;
+}

@@ -59,6 +59,25 @@ function getEventLocation(locationId) {
         return eventLocation.data();
     });
 }
+function createProduct(parent, { input }) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const newProduct = {
+            "name": input.name,
+            "price": input.price
+        };
+        yield firebase_admin_1.default.firestore().collection('Products').add(newProduct);
+        return newProduct;
+    });
+}
+function createTest(parent, data) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const newTest = {
+            "name": data.name
+        };
+        yield firebase_admin_1.default.firestore().collection('Test').add(newTest);
+        return newTest;
+    });
+}
 /*
 Export
 */
@@ -66,5 +85,7 @@ exports.default = {
     getEvents,
     getEventLocation,
     getProducts,
+    createProduct,
+    createTest
 };
 //# sourceMappingURL=services.js.map

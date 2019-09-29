@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import firebase from "../services/firestore";
 
-interface LoginProps{
+interface LoginProps {
     loggingIn: Function
 }
 
@@ -11,36 +11,45 @@ const Login: React.FC<LoginProps> = ({ loggingIn }) => {
 
     const handleSubmit = (event: any) => {
         firebase.auth().signInWithEmailAndPassword(email, password)
-        .then((cred) => { 
-            console.log(cred.user);
-            loggingIn(true);
-        })
-        .catch((error) => {
-            console.log({
-                'errorCode': error.code,
-                'errorMessage': error.message
+            .then((cred) => {
+                console.log(cred.user);
+                localStorage.setItem('signedIn', 'true')
+                loggingIn(true);
             })
-          });
+            .catch((error) => {
+                console.log({
+                    'errorCode': error.code,
+                    'errorMessage': error.message
+                })
+            });
         event.preventDefault();
     }
 
     return (
-        <div className="main">
-            <div className="container">
+        <div className="main main--login">
+            <div className="container container--login">
                 <form onSubmit={handleSubmit}>
-                    <input
-                        type="text"
-                        placeholder="email"
-                        value={email}
-                        onChange={e => setEmail(e.target.value)}
-                    />
-                    <input
-                        type="password"
-                        placeholder="password"
-                        value={password}
-                        onChange={e => setPassword(e.target.value)}
-                    />
-                    <input type="submit" value="Submit" />
+                    <div className="form-fields">
+                        <div className="form-group">
+                            <label htmlFor="email">Email</label>
+                            <input
+                                type="text"
+                                placeholder="email"
+                                value={email}
+                                onChange={e => setEmail(e.target.value)}
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="password">Password</label>
+                            <input
+                                type="password"
+                                placeholder="password"
+                                value={password}
+                                onChange={e => setPassword(e.target.value)}
+                            />
+                        </div>
+                        <button className="button button--default">Login</button>
+                    </div>
                 </form>
             </div>
         </div>

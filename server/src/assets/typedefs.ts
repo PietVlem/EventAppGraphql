@@ -31,6 +31,21 @@ const typeDefs = gql`
     events: [Event],
     products: [Product]
   }
+
+  input ProductInput{
+    name: String
+    price: Float
+    #image: String
+  }
+
+  type Test{
+    name: String,
+  }
+
+  type Mutation {
+    createProduct(input: ProductInput): Product,
+    createTest(name: String): Test,
+  }
 `;
 
 export default typeDefs;

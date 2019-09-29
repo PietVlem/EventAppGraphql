@@ -65,6 +65,23 @@ async function getEventLocation(locationId) {
     return eventLocation.data() as Location[];
 }
 
+async function createProduct(parent, {input}){
+    const newProduct = {
+        "name": input.name,
+        "price": input.price
+    }
+    await admin.firestore().collection('Products').add(newProduct);
+    return newProduct;
+}
+
+async function createTest(parent, data){
+    const newTest = {
+        "name": data.name
+    }
+    await admin.firestore().collection('Test').add(newTest);
+    return newTest;
+}
+
 /*
 Export
 */
@@ -72,4 +89,6 @@ export default {
     getEvents,
     getEventLocation,
     getProducts,
+    createProduct,
+    createTest
 }

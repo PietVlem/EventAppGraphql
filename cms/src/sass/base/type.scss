@@ -3,17 +3,19 @@
   TYPOGRAPHY
 ==============================================================================*/
 
+@import url('https://fonts.googleapis.com/css?family=Raleway:300,400,700,900&display=swap');
+
 // Font Stacks
 @mixin default-font($size: 16, $weight: 400, $lineHeight: 1.5em) {
-    font-family: Helvetica, Arial, Verdana, sans-serif;
+    font-family: 'Raleway', Helvetica, Arial, Verdana, sans-serif;
     @include fs($size);
     line-height: $lineHeight;
     font-weight: $weight;
   }
   
   @mixin display-font() {
-    font-family: Museo Sans, Helvetica, Arial, Verdana, sans-serif;
-    font-weight: 500;
+    font-family: 'Raleway', 'Museo Sans' , Helvetica, Arial, Verdana, sans-serif;
+    font-weight: 400;
   }
   
   
@@ -82,7 +84,6 @@
     @include display-font;
     @include optimize-font;
     color: $accent;
-    line-height: 1.2em;
     margin: 0 0 0.8em;
   
     a {
@@ -101,7 +102,10 @@
   }
   
   h2, .h2 {
-    @include fluid-type(font-size, $mediumSize, $largerSize, 20px, 28px);
+    @include fluid-type(font-size, $mediumSize, $largerSize, 20px, 30px);
+    color: $black;
+    font-weight: 900;
+    text-transform: capitalize;
   }
   
   h3, .h3 {

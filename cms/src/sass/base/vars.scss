@@ -4,17 +4,17 @@
 ==============================================================================*/
 
 // Grays
-$black: #444;
-$grayDark: #777;
-$gray: #B4B4B4;
+$black: #333644;
+$blackLight: lighten($black, 15%);
+$grayDark: #eeeeee;
+$gray: rgb(8, 7, 7);
 $grayMiddle: #D2CECB;
 $grayLight: #F4F4F4;
 $white: #fff;
 
 // Accent colors
-$accent: #FF8000;
+$accent: #42c3db;
 $accentHover: darken($accent, 10%);
-
 $accentLight: lighten($accent, 15%);
 
 // Links

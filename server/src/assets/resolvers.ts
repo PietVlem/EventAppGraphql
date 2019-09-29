@@ -15,5 +15,9 @@ export default {
                 throw new ApolloError(error);
             }
         }
+    },
+    Mutation: {
+        createProduct: (parent, {input}) => services.createProduct(parent, {input}),
+        createTest: (parent, name) => services.createTest(parent, name),
     }
 };

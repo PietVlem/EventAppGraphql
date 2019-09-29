@@ -11,15 +11,16 @@ Base
 @import "./base/type";
 
 /*
-Components
-*/
-@import "./components/tables";
-@import "./components/forms";
-
-/*
 Layout
 */
 @import "./layout/grid";
+@import "./layout/tables";
+@import "./layout/forms";
+
+/*
+Components
+*/
+
 
 /*
 Pages
