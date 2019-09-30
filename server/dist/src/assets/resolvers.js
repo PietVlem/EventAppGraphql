@@ -34,7 +34,6 @@ exports.default = {
     },
     Mutation: {
         createProduct: (parent, { input }) => services_1.default.createProduct(parent, { input }),
-        createTest: (parent, name) => services_1.default.createTest(parent, name),
     }
 };
 //# sourceMappingURL=resolvers.js.map

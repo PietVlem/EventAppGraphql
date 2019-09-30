@@ -2,25 +2,9 @@ import React, { useState } from 'react';
 import gql from 'graphql-tag';
 import { useMutation } from '@apollo/react-hooks';
 
-const ADD_PRODUCT = gql`
-    #works => createProductMutation({ variables: { name: productName } });
-    #mutation CreateTest($name: String!) {
-    #    createTest(name: $name){
-    #        name,
-    #    }
-    #}
-
-    #works in playground & with => createProductMutation()
-    #mutation{
-    #    createProduct(input: { name: "Drink", price: 2 }) {
-    #        name
-    #        price
-    #    }
-    #}
-
-    
-    mutation CreateProduct($name: String, $price: Float) {
-        createProduct(input: {name: $name, price: $price}){
+const ADD_PRODUCT = gql`    
+    mutation CreateProduct($name: String!, $price: Float!, $image: String) {
+        createProduct(input: {name: $name, price: $price, image: $image}){
             name
             price
         }
@@ -30,19 +14,11 @@ const ADD_PRODUCT = gql`
 const ProductForm: React.FC = () => {
     const [productName, setProductName] = useState('');
     const [productPrice, setProductPrice] = useState('');
-    //const [productImage, setProductImage] = useState('');
+    const [productImage, setProductImage] = useState('');
     const [createProductMutation, { error, data }] = useMutation(ADD_PRODUCT);
 
     const handleSubmit = async (event: any) => {
-        const product = {
-            name: productName,
-            price: productPrice
-        }
-        console.log(product);
-        createProductMutation({ variables: { name: productName, price: Number(productPrice) }});
-        if(data){
-            console.log(data.createProduct.name)
-        } 
+        createProductMutation({ variables: { name: productName, price: Number(productPrice), image: productImage }});
         event.preventDefault();
     }
 

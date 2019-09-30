@@ -3,8 +3,9 @@ import { Power } from 'react-feather';
 
 const headerBar: React.FC = () => {
     const logout = async () => {
-        console.log('logging out...')
+        localStorage.removeItem('graphqlApp_signedIn');
     }
+
     return (
         <div className="header-bar">
             <div className="grid">
@@ -12,9 +13,10 @@ const headerBar: React.FC = () => {
                     <span>Welcome, John Doe</span>
                 </div>
                 <div className="grid__item medium--one-half right">
-                    <span onClick={logout}>
-                        <Power /> Logout
-                    </span>
+                    <div className="logout" onClick={logout}>
+                        <Power size="20" /> 
+                        <span>Logout</span>
+                    </div>
                 </div>
             </div>
         </div>

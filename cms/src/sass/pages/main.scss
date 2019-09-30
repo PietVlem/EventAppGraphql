@@ -115,7 +115,7 @@ Sidebar
 */
 .sidebar{
     float: left;
-    padding: 40px;
+    padding: 150px 40px 40px 40px;
     width: 350px;
     background-color: $black;
     min-height: 100vh;
@@ -123,7 +123,7 @@ Sidebar
         list-style-type: none;
         .link{
             display: table;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
             text-decoration: none;
             color: $blackLight;
         }
@@ -147,8 +147,19 @@ Admin headerbar
     background-color: $white;
     .grid{
         padding: 20px 20px 0 20px;
-        .right span{
+        .right .logout{
             float: right;
+            cursor: pointer;
+            svg, span{
+                float: left;
+            }
+            svg{
+                margin-right: 10px;
+                color: $accent;
+            }
+            span{
+                font-size: 16px;
+            }
         }
     }
 }
@@ -161,7 +172,11 @@ Admin sub-headerbar
     box-shadow: 11px 10px 21px -13px rgba(0,0,0,0.15);
     .grid{
         padding: 20px 20px 0 20px;
-        //border-bottom: 1px solid $black;
+        h2{
+            padding-bottom: 0;
+            margin-bottom: 0;
+            margin-top: 20px;
+        }
         button{
             float: right;
             margin: 10px;
@@ -183,6 +198,12 @@ data-body
     }
 }
 
+/*
+Product Data
+*/
+.product-image{
+    height: 50px;
+}
 
 /* =============================================================================
    PAGES

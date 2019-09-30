@@ -8,6 +8,7 @@ const GET_PRODUCTS = gql`
     products {
         name
         price
+        image
     }
   }
 `;
@@ -28,7 +29,8 @@ const ProductData: React.FC = () => {
         <table>
             <thead>
                 <tr>
-                    <th>Product</th>
+                    <th>Image</th>
+                    <th>Name</th>
                     <th>Prijs</th>
                     <th>Acties</th>
                 </tr>
@@ -37,6 +39,9 @@ const ProductData: React.FC = () => {
                 {data.products.map((product: any) => (
                     i++ ,
                     <tr key={i}>
+                        <td>
+                            <img className="product-image" src={product.image} alt={product.name}/>
+                        </td>
                         <td>{product.name}</td>
                         <td>{product.price}</td>
                         <td>

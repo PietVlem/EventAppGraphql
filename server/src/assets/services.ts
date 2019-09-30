@@ -1,5 +1,6 @@
 import admin from 'firebase-admin';
 import * as serviceAccountJson from '../../service-account.json';
+import uuid from "uuid";
 
 /*
 Firestore
@@ -32,6 +33,7 @@ interface Location {
 }
 
 interface Product {
+    id: String
     name: String
     price: Number
     image: String
@@ -66,20 +68,14 @@ async function getEventLocation(locationId) {
 }
 
 async function createProduct(parent, {input}){
-    const newProduct = {
+    const newProduct: Product = {
+        "id": uuid(),
         "name": input.name,
-        "price": input.price
+        "price": input.price,
+        "image": input.image
     }
     await admin.firestore().collection('Products').add(newProduct);
     return newProduct;
-}
-
-async function createTest(parent, data){
-    const newTest = {
-        "name": data.name
-    }
-    await admin.firestore().collection('Test').add(newTest);
-    return newTest;
 }
 
 /*
@@ -90,5 +86,4 @@ export default {
     getEventLocation,
     getProducts,
     createProduct,
-    createTest
 }

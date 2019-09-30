@@ -12,8 +12,8 @@ const Login: React.FC<LoginProps> = ({ loggingIn }) => {
     const handleSubmit = (event: any) => {
         firebase.auth().signInWithEmailAndPassword(email, password)
             .then((cred) => {
-                console.log(cred.user);
-                localStorage.setItem('signedIn', 'true')
+                // console.log(cred.user);
+                localStorage.setItem('graphqlApp_signedIn', 'true')
                 loggingIn(true);
             })
             .catch((error) => {

@@ -22,6 +22,7 @@ const typeDefs = gql`
   }
 
   type Product {
+    id: ID
     name: String
     price: Float
     image: String
@@ -35,16 +36,11 @@ const typeDefs = gql`
   input ProductInput{
     name: String
     price: Float
-    #image: String
-  }
-
-  type Test{
-    name: String,
+    image: String
   }
 
   type Mutation {
     createProduct(input: ProductInput): Product,
-    createTest(name: String): Test,
   }
 `;
 

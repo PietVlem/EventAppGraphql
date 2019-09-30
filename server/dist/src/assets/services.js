@@ -21,6 +21,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const firebase_admin_1 = __importDefault(require("firebase-admin"));
 const serviceAccountJson = __importStar(require("../../service-account.json"));
+const uuid_1 = __importDefault(require("uuid"));
 /*
 Firestore
 */
@@ -62,20 +63,13 @@ function getEventLocation(locationId) {
 function createProduct(parent, { input }) {
     return __awaiter(this, void 0, void 0, function* () {
         const newProduct = {
+            "id": uuid_1.default(),
             "name": input.name,
-            "price": input.price
+            "price": input.price,
+            "image": input.image
         };
         yield firebase_admin_1.default.firestore().collection('Products').add(newProduct);
         return newProduct;
-    });
-}
-function createTest(parent, data) {
-    return __awaiter(this, void 0, void 0, function* () {
-        const newTest = {
-            "name": data.name
-        };
-        yield firebase_admin_1.default.firestore().collection('Test').add(newTest);
-        return newTest;
     });
 }
 /*
@@ -86,6 +80,5 @@ exports.default = {
     getEventLocation,
     getProducts,
     createProduct,
-    createTest
 };
 //# sourceMappingURL=services.js.map

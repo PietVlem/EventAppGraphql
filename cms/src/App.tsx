@@ -25,7 +25,7 @@ const App: React.FC = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    const signedIn = localStorage.getItem("signedIn");
+    const signedIn = localStorage.getItem("graphqlApp_signedIn");
     if (signedIn) return setIsLoggedIn(true);
   }, [isLoggedIn])
 
