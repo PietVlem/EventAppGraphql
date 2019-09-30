@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Children } from 'react';
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from '@apollo/react-hooks';
 
@@ -35,7 +35,7 @@ const App: React.FC = () => {
         <Login loggingIn={setIsLoggedIn} />
       }
       {isLoggedIn &&
-        <AdminRouter/>
+        <AdminRouter />
       }
     </ApolloProvider>
   );

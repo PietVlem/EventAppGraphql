@@ -4,9 +4,9 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 /*
 Screens
 */
-import ProductsPage from '../pages/admin/products';
-import ProductsCreatePage from '../pages/admin/productsCreate';
-import EventsPage from '../pages/admin/events';
+import ProductsPage from '../pages/admin/products/products';
+import ProductsCreatePage from '../pages/admin/products/productsCreate';
+import EventsPage from '../pages/admin/events/events';
 
 const adminRouter: React.FC = () => {
     return (

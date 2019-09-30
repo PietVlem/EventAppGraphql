@@ -26,33 +26,35 @@ const ProductData: React.FC = () => {
     let i = 1;
 
     return (
-        <table>
-            <thead>
-                <tr>
-                    <th>Image</th>
-                    <th>Name</th>
-                    <th>Prijs</th>
-                    <th>Acties</th>
-                </tr>
-            </thead>
-            <tbody>
-                {data.products.map((product: any) => (
-                    i++ ,
-                    <tr key={i}>
-                        <td>
-                            <img className="product-image" src={product.image} alt={product.name}/>
-                        </td>
-                        <td>{product.name}</td>
-                        <td>{product.price}</td>
-                        <td>
-                            <a href="#" onClick={deleteItem}>
-                                <XSquare />
-                            </a>
-                        </td>
+        <React.Fragment>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Image</th>
+                        <th>Name</th>
+                        <th>Prijs</th>
+                        <th>Acties</th>
                     </tr>
-                ))}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    {data.products.map((product: any) => (
+                        i++ ,
+                        <tr key={i}>
+                            <td>
+                                <img className="product-image" src={product.image} alt={product.name}/>
+                            </td>
+                            <td>{product.name}</td>
+                            <td>{product.price}</td>
+                            <td>
+                                <a href="#" onClick={deleteItem}>
+                                    <XSquare />
+                                </a>
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </React.Fragment>
     )
 }
 
