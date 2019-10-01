@@ -5,6 +5,7 @@ import { Power } from 'react-feather';
 const headerBar: React.FC = () => {
     const logout = async () => {
         localStorage.removeItem('graphqlApp_signedIn');
+        window.location.reload();
     }
 
     return (

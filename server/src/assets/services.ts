@@ -50,7 +50,7 @@ async function getEvents() {
     return events.docs.map(event => event.data()) as Event[];
 }
 
-async function getProducts(){
+async function getProducts() {
     const products = await admin
         .firestore()
         .collection('Products')
@@ -67,7 +67,7 @@ async function getEventLocation(locationId) {
     return eventLocation.data() as Location[];
 }
 
-async function createProduct(parent, {input}){
+async function createProduct(parent, { input }) {
     const newProduct: Product = {
         "id": uuid(),
         "name": input.name,
@@ -78,6 +78,27 @@ async function createProduct(parent, {input}){
     return newProduct;
 }
 
+async function deleteProduct(parent, data) {
+    await admin.firestore()
+        .collection('Products')
+        .where('id', "==", data.id)
+        .get()
+        .then(snapshot => {
+            if (snapshot.empty) {
+                console.log('No matching documents.');
+                return;
+            }
+            const productToBeDeleted = snapshot.docs[0];
+            admin.firestore().collection('Products').doc(productToBeDeleted.id).delete();
+            const message =`Product: ${productToBeDeleted.data().name} has been removed`
+            console.log(message);
+            return message;
+        })
+        .catch(err => {
+            console.log('Error getting documents', err);
+        });
+}
+
 /*
 Export
 */
@@ -86,4 +107,5 @@ export default {
     getEventLocation,
     getProducts,
     createProduct,
+    deleteProduct,
 }

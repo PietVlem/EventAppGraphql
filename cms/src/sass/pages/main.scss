@@ -34,6 +34,10 @@ body {
     }
 }
 
+.pointer{
+    cursor: pointer;
+}
+
 /* =============================================================================
    HELPERS
    ========================================================================== */
@@ -126,6 +130,26 @@ Sidebar
             margin-bottom: 30px;
             text-decoration: none;
             color: $blackLight;
+            svg, span{
+                float: left;
+            }
+            svg{
+                margin-right: 10px;
+            }
+        }
+        .link--highlighted{
+            display: table;
+            margin-bottom: 30px;
+            text-decoration: none;
+            color: $white;
+            font-weight: 700;
+            svg, span{
+                float: left;
+            }
+            svg{
+                margin-right: 10px;
+                color: $accent;
+            }
         }
     }
 }

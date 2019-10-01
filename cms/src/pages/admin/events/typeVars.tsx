@@ -1,5 +1,6 @@
 const typeVars = {
-    type: "Evenementen"
+    type: "Evenementen",
+    buttonText: "Evenement toevoegen"
 }
 
 export default typeVars;

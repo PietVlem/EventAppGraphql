@@ -1,16 +1,27 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { Box, Calendar } from 'react-feather';
 
-const sidebar: React.FC = () => {
+interface SidebarProps {
+    type: String
+}
+
+const sidebar: React.FC<SidebarProps> = ({ type }) => {
     return (
         <div className="sidebar">
             <div className="wrapper">
                 <ul>
-                    <Link className="link" to="/admin/products/">
-                        <li>Products</li>
+                    <Link className={type === "Producten" ? "link--highlighted" : "link"} to="/admin/products/">
+                        <li>
+                            <Box/>
+                            <span>Producten</span>
+                        </li>
                     </Link>
-                    <Link className="link" to="/admin/events">
-                        <li>Events</li>
+                    <Link className={type === "Evenementen" ? "link--highlighted" : "link"} to="/admin/events">
+                        <li>
+                            <Calendar/>
+                            <span>Evenementen</span>
+                        </li>
                     </Link>
                 </ul>
             </div>

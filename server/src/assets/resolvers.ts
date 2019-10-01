@@ -18,5 +18,6 @@ export default {
     },
     Mutation: {
         createProduct: (parent, {input}) => services.createProduct(parent, {input}),
+        deleteProduct: (parent, id) => services.deleteProduct(parent, id)
     }
 };

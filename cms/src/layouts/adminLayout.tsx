@@ -8,7 +8,8 @@ import HeaderBar from '../components/admin/header/headerBar';
 import SubHeaderBar from '../components/admin/header/subHeaderBar';
 
 interface TypeVars{
-    type: String
+    type: String,
+    buttonText: String
 }
 
 interface AdminLayoutProps{
@@ -18,10 +19,10 @@ interface AdminLayoutProps{
 const adminLayout: React.FC<AdminLayoutProps> = ({ typeVars, children }) => {
     return (
         <div className="admin-container">
-            <Sidebar />
+            <Sidebar type={typeVars.type}/>
             <div className="admin-content">
                 <HeaderBar />
-                <SubHeaderBar type={typeVars.type}/>
+                <SubHeaderBar type={typeVars.type} buttonText={typeVars.buttonText}/>
                 <div className="data-body">
                     {children}
                 </div>

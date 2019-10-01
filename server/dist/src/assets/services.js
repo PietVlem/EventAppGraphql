@@ -72,6 +72,28 @@ function createProduct(parent, { input }) {
         return newProduct;
     });
 }
+function deleteProduct(parent, data) {
+    return __awaiter(this, void 0, void 0, function* () {
+        yield firebase_admin_1.default.firestore()
+            .collection('Products')
+            .where('id', "==", data.id)
+            .get()
+            .then(snapshot => {
+            if (snapshot.empty) {
+                console.log('No matching documents.');
+                return;
+            }
+            const productToBeDeleted = snapshot.docs[0];
+            firebase_admin_1.default.firestore().collection('Products').doc(productToBeDeleted.id).delete();
+            const message = `Product: ${productToBeDeleted.data().name} has been removed`;
+            console.log(message);
+            return message;
+        })
+            .catch(err => {
+            console.log('Error getting documents', err);
+        });
+    });
+}
 /*
 Export
 */
@@ -80,5 +102,6 @@ exports.default = {
     getEventLocation,
     getProducts,
     createProduct,
+    deleteProduct,
 };
 //# sourceMappingURL=services.js.map

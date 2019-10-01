@@ -34,6 +34,7 @@ exports.default = {
     },
     Mutation: {
         createProduct: (parent, { input }) => services_1.default.createProduct(parent, { input }),
+        deleteProduct: (parent, id) => services_1.default.deleteProduct(parent, id)
     }
 };
 //# sourceMappingURL=resolvers.js.map

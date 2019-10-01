@@ -1,5 +1,6 @@
 const typeVars = {
-    type: "Producten"
+    type: "Producten",
+    buttonText: "Product toevoegen"
 }
 
 export default typeVars;
