@@ -21,7 +21,7 @@ const ProductForm: React.FC = () => {
     const [productName, setProductName] = useState<string>('');
     const [productPrice, setProductPrice] = useState<string>('');
     const [ImageFiles, setImageFiles] = useState<Array<File>>([]);
-    const [status, setSatus] = useState<string>('Vul de onderstaande velden in');
+    const [status, setSatus] = useState<string>('Vul de onderstaande velden in:');
     const [createProductMutation, { error }] = useMutation(ADD_PRODUCT);
 
     const capitalize = (s: string) => {
@@ -32,7 +32,7 @@ const ProductForm: React.FC = () => {
     const handleSubmit = async (event: any) => {
         event.preventDefault();
         setSatus('Saving data to database...');
-        uplaodFile().then(async(imageUrl)=>{
+        uplaodImage().then(async(imageUrl)=>{
             if (imageUrl !== null)
                 await createProductMutation({ variables: { name: productName, price: Number(productPrice), image: imageUrl } });
                 setProductName('');
@@ -41,14 +41,15 @@ const ProductForm: React.FC = () => {
                 setSatus(`${productName} is toegevoegd!`);
         });
         setTimeout(() => { 
-            setSatus('Vul de onderstaande velden in') 
+            setSatus('Vul de onderstaande velden in:') 
         }, 5000);
     }
 
-    const uplaodFile = async () => {
+    const uplaodImage = async () => {
         let imageUrl;
         if (ImageFiles.length === 0) {
             console.error('No Files to upload!');
+            setSatus('U heeft geen image meegegeven.')
             return imageUrl = null;
         }
         /* Get file and create file name */

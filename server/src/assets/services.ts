@@ -1,6 +1,7 @@
 import admin from 'firebase-admin';
 import * as serviceAccountJson from '../../service-account.json';
 import uuid from "uuid";
+require('dotenv').config();
 
 /*
 Firestore
@@ -89,7 +90,19 @@ async function deleteProduct(parent, data) {
                 return;
             }
             const productToBeDeleted = snapshot.docs[0];
+            const imagePath = snapshot.docs[0].data().image;
+            /* Get filename from Download-url */
+            let name = imagePath.substr(imagePath.indexOf('%2F') + 3, (imagePath.indexOf('?')) - (imagePath.indexOf('%2F') + 3));
+            name = name.replace('%20',' '); 
+            /* Delete firebase storage Image */
+            const bucket = admin.storage().bucket(process.env.FIREBASE_BUCKET);
+            bucket.deleteFiles({
+                prefix: `ProductImages/${name}`
+            });
+            // bucket.file(`ProductImages/${name}`).delete();
+            /* Delete firestore document */
             admin.firestore().collection('Products').doc(productToBeDeleted.id).delete();
+            /* Return message after deleting */
             const message =`Product: ${productToBeDeleted.data().name} has been removed`
             console.log(message);
             return message;

@@ -22,6 +22,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const firebase_admin_1 = __importDefault(require("firebase-admin"));
 const serviceAccountJson = __importStar(require("../../service-account.json"));
 const uuid_1 = __importDefault(require("uuid"));
+require('dotenv').config();
 /*
 Firestore
 */
@@ -84,7 +85,19 @@ function deleteProduct(parent, data) {
                 return;
             }
             const productToBeDeleted = snapshot.docs[0];
+            const imagePath = snapshot.docs[0].data().image;
+            /* Get filename from Download-url */
+            let name = imagePath.substr(imagePath.indexOf('%2F') + 3, (imagePath.indexOf('?')) - (imagePath.indexOf('%2F') + 3));
+            name = name.replace('%20', ' ');
+            /* Delete firebase storage Image */
+            const bucket = firebase_admin_1.default.storage().bucket(process.env.FIREBASE_BUCKET);
+            bucket.deleteFiles({
+                prefix: `ProductImages/${name}`
+            });
+            // bucket.file(`ProductImages/${name}`).delete();
+            /* Delete firestore document */
             firebase_admin_1.default.firestore().collection('Products').doc(productToBeDeleted.id).delete();
+            /* Return message after deleting */
             const message = `Product: ${productToBeDeleted.data().name} has been removed`;
             console.log(message);
             return message;
