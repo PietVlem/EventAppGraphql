@@ -230,7 +230,21 @@ Product Data
 }
 
 /*
-Reacht-dropzone
+Product Form
+*/
+.form-status{
+    background-color: $accent;
+    margin-bottom: 20px;
+    span{
+        display: block;
+        padding: 10px;
+        font-weight: 700;
+        color: white;
+    }
+}
+
+/*
+React-dropzone
 */
 .react-dropzone{
     border: 1px solid $black;

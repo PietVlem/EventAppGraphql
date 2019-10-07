@@ -21,28 +21,43 @@ const ProductForm: React.FC = () => {
     const [productName, setProductName] = useState<string>('');
     const [productPrice, setProductPrice] = useState<string>('');
     const [ImageFiles, setImageFiles] = useState<Array<File>>([]);
-    const [createProductMutation, { error, data }] = useMutation(ADD_PRODUCT);
+    const [status, setSatus] = useState<string>('Vul de onderstaande velden in');
+    const [createProductMutation, { error }] = useMutation(ADD_PRODUCT);
+
+    const capitalize = (s: string) => {
+        if (typeof s !== 'string') return ''
+        return s.charAt(0).toUpperCase() + s.slice(1)
+    }
 
     const handleSubmit = async (event: any) => {
         event.preventDefault();
-        uplaodFile().then((imageUrl)=>{
-            createProductMutation({ variables: { name: productName, price: Number(productPrice), image: imageUrl } });
+        setSatus('Saving data to database...');
+        uplaodFile().then(async(imageUrl)=>{
+            if (imageUrl !== null)
+                await createProductMutation({ variables: { name: productName, price: Number(productPrice), image: imageUrl } });
+                setProductName('');
+                setProductPrice('');
+                setImageFiles([]);
+                setSatus(`${productName} is toegevoegd!`);
         });
+        setTimeout(() => { 
+            setSatus('Vul de onderstaande velden in') 
+        }, 5000);
     }
 
     const uplaodFile = async () => {
-        let imageUrl: string = '';
+        let imageUrl;
         if (ImageFiles.length === 0) {
-            return console.error('No Files to upload!');
+            console.error('No Files to upload!');
+            return imageUrl = null;
         }
-        // Get file and create file name
+        /* Get file and create file name */
         const file = ImageFiles[0];
         const currentImageName = file.name.substring(0, file.name.length - 4) + '-' + Date.now();
-        // Upload file to firebase
+        /* Upload file to firebase */
         await firebase.storage().ref(`ProductImages/${currentImageName}`).put(file);
-        // Get filename of the uploaded image
+        /* Get filename of the uploaded image */
         await firebase.storage().ref('ProductImages').child(currentImageName).getDownloadURL().then(url => {
-            console.table({ "data: ": url, 'type:': typeof (url) });
             imageUrl = url;
         })
         return imageUrl;
@@ -51,13 +66,16 @@ const ProductForm: React.FC = () => {
     return (
         <form onSubmit={handleSubmit}>
             {error ? <p>Oh no! {error.message}</p> : null}
+            <div className="form-status">
+                <span>{status}</span>
+            </div>
             <div className="form-fields">
                 <div className="form-group">
                     <label htmlFor="email">Naam product</label>
                     <input
                         type="text"
                         value={productName}
-                        onChange={e => setProductName(e.target.value)}
+                        onChange={e => setProductName(capitalize(e.target.value))}
                     />
                 </div>
                 <div className="form-group">
@@ -70,7 +88,7 @@ const ProductForm: React.FC = () => {
                 </div>
                 <div className="form-group">
                     <label htmlFor="password">Foto product</label>
-                    <ReactDropzone setImageFiles={setImageFiles} />
+                    <ReactDropzone files={ImageFiles} setImageFiles={setImageFiles} />
                 </div>
                 <button className="button button--primary">
                     <span>Aanmaken</span>
@@ -79,6 +97,5 @@ const ProductForm: React.FC = () => {
         </form>
     )
 }
-
 
 export default ProductForm;
