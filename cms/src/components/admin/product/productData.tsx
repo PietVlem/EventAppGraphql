@@ -24,7 +24,6 @@ const ProductData: React.FC = () => {
     const { loading, error, data } = useQuery(GET_PRODUCTS);
     const [deleteProductMutation] = useMutation(DELETE_PRODUCT);
 
-
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error! {error.message}</p>;
 

@@ -1,12 +1,14 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { PlusSquare } from 'react-feather';
 
 interface SubHeaderProps {
     type: String,
     buttonText: String
+    urlVar: String
 }
 
-const subHeaderBar: React.FC<SubHeaderProps> = ({ type, buttonText }) => {
+const subHeaderBar: React.FC<SubHeaderProps> = ({ type, buttonText, urlVar }) => {
     return (
         <div className="sub-header-bar">
             <div className="grid">
@@ -14,10 +16,12 @@ const subHeaderBar: React.FC<SubHeaderProps> = ({ type, buttonText }) => {
                     <h2>{type}</h2>
                 </div>
                 <div className="grid__item medium--one-half">
-                    <button className="button button--primary">
-                        <PlusSquare />
-                        <span>{buttonText}</span>
-                    </button>
+                    <Link to={`/admin/${urlVar}/create`}>
+                        <button className="button button--primary">
+                            <PlusSquare />
+                            <span>{buttonText}</span>
+                        </button>
+                    </Link>
                 </div>
             </div>
         </div>
