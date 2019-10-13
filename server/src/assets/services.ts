@@ -27,6 +27,8 @@ interface Event {
 }
 
 interface Location {
+    id: String
+    name: String,
     address: String
     city: String
     zipcode: String
@@ -167,6 +169,44 @@ async function deleteEvent(parent, data){
     });
 }
 
+async function createLocation(parent, {input}){
+    const newLocation: Location = {
+        "id": uuid(),
+        "name": input.name,
+        "address": input.address,
+        "city": input.city,
+        "country": input.country,
+        "zipcode": input.zipcode,
+    }
+    await admin.firestore().collection('Locations').add(newLocation);
+    return newLocation;
+}
+
+async function deleteLocation(parent, data){
+    await admin.firestore()
+    .collection('Locations')
+    .where('id', "==", data.id)
+    .get()
+    .then(snapshot => {
+        if (snapshot.empty) {
+            console.log('No matching documents.');
+            return;
+        }
+        const LocationsToBeDeleted = snapshot.docs[0];
+        /* Delete firestore document */
+        admin.firestore().collection('Locations').doc(LocationsToBeDeleted.id).delete();
+        /* Return message after deleting */
+        const message =`Locations: ${LocationsToBeDeleted.data().name} has been removed`
+        console.log(message);
+        return message;
+    })
+    .catch(err => {
+        console.log('Error getting documents', err);
+    });
+}
+
+
+
 /*
 Export
 */
@@ -179,4 +219,6 @@ export default {
     deleteProduct,
     createEvent,
     deleteEvent,
+    createLocation,
+    deleteLocation
 }

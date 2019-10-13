@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import gql from 'graphql-tag';
 import { useMutation, useQuery } from '@apollo/react-hooks';
 
@@ -37,7 +37,7 @@ const EventsForm: React.FC = () => {
         details: "",
         locationid: "",
     });
-    const { loading, data } = useQuery(GET_LOCATIONS);
+    const { data } = useQuery(GET_LOCATIONS);
     const [createEventMutation, { error }] = useMutation(ADD_EVENT);
 
     const onChangeData = (key: string, value: string) => {

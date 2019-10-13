@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import gql from 'graphql-tag';
 import { useMutation } from '@apollo/react-hooks';
-import firebase from '../../../services/firestore';
 
 /* Components */
 import ReactDropzone from '../../utils/reactDropzone';

@@ -165,6 +165,44 @@ function deleteEvent(parent, data) {
         });
     });
 }
+function createLocation(parent, { input }) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const newLocation = {
+            "id": uuid_1.default(),
+            "name": input.name,
+            "address": input.address,
+            "city": input.city,
+            "country": input.country,
+            "zipcode": input.zipcode,
+        };
+        yield firebase_admin_1.default.firestore().collection('Locations').add(newLocation);
+        return newLocation;
+    });
+}
+function deleteLocation(parent, data) {
+    return __awaiter(this, void 0, void 0, function* () {
+        yield firebase_admin_1.default.firestore()
+            .collection('Locations')
+            .where('id', "==", data.id)
+            .get()
+            .then(snapshot => {
+            if (snapshot.empty) {
+                console.log('No matching documents.');
+                return;
+            }
+            const LocationsToBeDeleted = snapshot.docs[0];
+            /* Delete firestore document */
+            firebase_admin_1.default.firestore().collection('Locations').doc(LocationsToBeDeleted.id).delete();
+            /* Return message after deleting */
+            const message = `Locations: ${LocationsToBeDeleted.data().name} has been removed`;
+            console.log(message);
+            return message;
+        })
+            .catch(err => {
+            console.log('Error getting documents', err);
+        });
+    });
+}
 /*
 Export
 */
@@ -177,5 +215,7 @@ exports.default = {
     deleteProduct,
     createEvent,
     deleteEvent,
+    createLocation,
+    deleteLocation
 };
 //# sourceMappingURL=services.js.map

@@ -53,11 +53,21 @@ const typeDefs = gql `
     image: String
   }
 
+  input LocationInput{
+    name: String
+    address: String
+    city: String
+    zipcode: String
+    country: String
+  }
+
   type Mutation {
     createProduct(input: ProductInput!): Product,
     deleteProduct(id: String!): String,
     createEvent(input: EventInput!): Event,
     deleteEvent(id: String!): String,
+    createLocation(input: LocationInput!): Location,
+    deleteLocation(id: String!): String
   }
 `;
 exports.default = typeDefs;

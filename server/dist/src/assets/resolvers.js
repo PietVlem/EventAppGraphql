@@ -38,6 +38,8 @@ exports.default = {
         deleteProduct: (parent, id) => services_1.default.deleteProduct(parent, id),
         createEvent: (parent, { input }) => services_1.default.createEvent(parent, { input }),
         deleteEvent: (parent, id) => services_1.default.deleteEvent(parent, id),
+        createLocation: (parent, { input }) => services_1.default.createLocation(parent, { input }),
+        deleteLocation: (parent, id) => services_1.default.deleteLocation(parent, id),
     }
 };
 //# sourceMappingURL=resolvers.js.map

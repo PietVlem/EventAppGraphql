@@ -22,5 +22,7 @@ export default {
         deleteProduct: (parent, id) => services.deleteProduct(parent, id),
         createEvent: (parent, {input}) => services.createEvent(parent, {input}),
         deleteEvent: (parent, id) => services.deleteEvent(parent, id),
+        createLocation: (parent, {input}) => services.createLocation(parent, {input}),
+        deleteLocation: (parent, id) => services.deleteLocation(parent, id),
     }
 };
