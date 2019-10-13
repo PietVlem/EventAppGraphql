@@ -18,7 +18,7 @@ const ADD_PRODUCT = gql`
     }
 `;
 
-const ProductForm: React.FC = () => {
+const ProductsForm: React.FC = () => {
     const [productName, setProductName] = useState<string>('');
     const [productPrice, setProductPrice] = useState<string>('');
     const [ImageFiles, setImageFiles] = useState<Array<File>>([]);
@@ -81,4 +81,4 @@ const ProductForm: React.FC = () => {
     )
 }
 
-export default ProductForm;
+export default ProductsForm;

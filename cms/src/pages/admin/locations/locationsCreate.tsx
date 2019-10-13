@@ -4,7 +4,7 @@ import React from 'react';
 Components
 */
 import AdminLayout from '../../../layouts/adminLayout';
-import ProductsForm from '../../../components/admin/products/productsForm';
+import LocationsForm from '../../../components/admin/locations/locationsForm';
 
 /*
 Typevars
@@ -14,7 +14,7 @@ import typeVars from './typeVars';
 const productsCreate: React.FC = () => {
     return (
         <AdminLayout typeVars={typeVars}>
-            <ProductsForm />
+            <LocationsForm />
         </AdminLayout>
     )
 }

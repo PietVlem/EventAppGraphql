@@ -4,19 +4,19 @@ import React from 'react';
 Components
 */
 import AdminLayout from '../../../layouts/adminLayout';
-import ProductsForm from '../../../components/admin/products/productsForm';
+import LocationsData from '../../../components/admin/locations/locationsData';
 
 /*
 Typevars
 */
 import typeVars from './typeVars';
 
-const productsCreate: React.FC = () => {
+const events: React.FC = () => {
     return (
         <AdminLayout typeVars={typeVars}>
-            <ProductsForm />
+            <LocationsData />
         </AdminLayout>
     )
 }
 
-export default productsCreate;
+export default events;

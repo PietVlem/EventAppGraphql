@@ -20,7 +20,7 @@ const DELETE_PRODUCT = gql`
     }
 `;
 
-const ProductData: React.FC = () => {
+const ProductsData: React.FC = () => {
     const { loading, error, data } = useQuery(GET_PRODUCTS);
     const [deleteProductMutation] = useMutation(DELETE_PRODUCT);
 
@@ -62,4 +62,4 @@ const ProductData: React.FC = () => {
     )
 }
 
-export default ProductData
+export default ProductsData

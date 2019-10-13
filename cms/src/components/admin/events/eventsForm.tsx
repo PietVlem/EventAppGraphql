@@ -132,7 +132,7 @@ const EventsForm: React.FC = () => {
                 </div>
 
                 <div className="form-group">
-                    <label >Facebook Link evenement</label>
+                    <label >Facebook link evenement</label>
                     <input
                         type="text"
                         value={eventData.facebook}

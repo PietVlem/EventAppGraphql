@@ -4,7 +4,7 @@ import React from 'react';
 Components
 */
 import AdminLayout from '../../../layouts/adminLayout';
-import ProductData from '../../../components/admin/product/productData';
+import ProductsData from '../../../components/admin/products/productsData';
 
 /*
 Typevars
@@ -14,7 +14,7 @@ import typeVars from './typeVars';
 const products: React.FC = () => {
     return (
         <AdminLayout typeVars={typeVars}>
-            <ProductData />
+            <ProductsData />
         </AdminLayout>
     )
 }
