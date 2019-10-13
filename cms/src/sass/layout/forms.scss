@@ -201,6 +201,8 @@ form {
   }
 
   .button--primary{
+    border-radius: 30px;
+    box-shadow: 11px 10px 21px -13px rgba(0, 0, 0, 0.15);
     svg, span{
       float: left;
     }
