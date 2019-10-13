@@ -22,7 +22,7 @@ interface Event {
     end: String
     facebook: String
     details: String
-    location: String
+    locationId: String
     image: String
 }
 
@@ -57,6 +57,14 @@ async function getProducts() {
         .collection('Products')
         .get();
     return products.docs.map(product => product.data()) as Product[];
+}
+
+async function getLocations(){
+    const locations = await admin
+    .firestore()
+    .collection('Locations')
+    .get();
+return locations.docs.map(location => location.data()) as Location[];
 }
 
 async function getEventLocation(locationId) {
@@ -99,7 +107,6 @@ async function deleteProduct(parent, data) {
             bucket.deleteFiles({
                 prefix: `ProductImages/${name}`
             });
-            // bucket.file(`ProductImages/${name}`).delete();
             /* Delete firestore document */
             admin.firestore().collection('Products').doc(productToBeDeleted.id).delete();
             /* Return message after deleting */
@@ -112,13 +119,64 @@ async function deleteProduct(parent, data) {
         });
 }
 
+async function createEvent(parent, {input}){
+    const newEvent: Event = {
+        "id": uuid(),
+        "name": input.name,
+        "date": input.date,
+        "image": input.image,
+        "start": input.start,
+        "end": input.end,
+        "facebook": input.facebook,
+        "details": input.details,
+        "locationId": input.locationId,
+    }
+    await admin.firestore().collection('Events').add(newEvent);
+    return newEvent;
+}
+
+async function deleteEvent(parent, data){
+    await admin.firestore()
+    .collection('Events')
+    .where('id', "==", data.id)
+    .get()
+    .then(snapshot => {
+        if (snapshot.empty) {
+            console.log('No matching documents.');
+            return;
+        }
+        const EventToBeDeleted = snapshot.docs[0];
+        const imagePath = snapshot.docs[0].data().image;
+        /* Get filename from Download-url */
+        let name = imagePath.substr(imagePath.indexOf('%2F') + 3, (imagePath.indexOf('?')) - (imagePath.indexOf('%2F') + 3));
+        name = name.replace('%20',' '); 
+        /* Delete firebase storage Image */
+        const bucket = admin.storage().bucket(process.env.FIREBASE_BUCKET);
+        bucket.deleteFiles({
+            prefix: `EventImages/${name}`
+        });
+        /* Delete firestore document */
+        admin.firestore().collection('Events').doc(EventToBeDeleted.id).delete();
+        /* Return message after deleting */
+        const message =`Events: ${EventToBeDeleted.data().name} has been removed`
+        console.log(message);
+        return message;
+    })
+    .catch(err => {
+        console.log('Error getting documents', err);
+    });
+}
+
 /*
 Export
 */
 export default {
     getEvents,
-    getEventLocation,
+    getLocations,
     getProducts,
+    getEventLocation,
     createProduct,
     deleteProduct,
+    createEvent,
+    deleteEvent,
 }

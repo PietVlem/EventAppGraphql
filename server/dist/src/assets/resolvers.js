@@ -17,6 +17,7 @@ const services_1 = __importDefault(require("./services"));
 exports.default = {
     Query: {
         events: () => services_1.default.getEvents(),
+        locations: () => services_1.default.getLocations(),
         products: () => services_1.default.getProducts(),
     },
     Event: {
@@ -34,7 +35,9 @@ exports.default = {
     },
     Mutation: {
         createProduct: (parent, { input }) => services_1.default.createProduct(parent, { input }),
-        deleteProduct: (parent, id) => services_1.default.deleteProduct(parent, id)
+        deleteProduct: (parent, id) => services_1.default.deleteProduct(parent, id),
+        createEvent: (parent, { input }) => services_1.default.createEvent(parent, { input }),
+        deleteEvent: (parent, id) => services_1.default.deleteEvent(parent, id),
     }
 };
 //# sourceMappingURL=resolvers.js.map

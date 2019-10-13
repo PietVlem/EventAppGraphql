@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const { gql } = require('apollo-server');
 const typeDefs = gql `
   type Location{
+    id: ID
     name: String
     address: String
     city: String
@@ -31,6 +32,7 @@ const typeDefs = gql `
 
   type Query {
     events: [Event],
+    locations: [Location],
     products: [Product]
   }
 
@@ -40,9 +42,22 @@ const typeDefs = gql `
     image: String
   }
 
+  input EventInput{
+    name: String
+    date: String
+    start: String
+    end: String
+    facebook: String
+    details: String
+    locationId: String
+    image: String
+  }
+
   type Mutation {
     createProduct(input: ProductInput!): Product,
     deleteProduct(id: String!): String,
+    createEvent(input: EventInput!): Event,
+    deleteEvent(id: String!): String,
   }
 `;
 exports.default = typeDefs;

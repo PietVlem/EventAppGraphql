@@ -38,7 +38,7 @@ const ProductData: React.FC = () => {
                 <thead>
                     <tr>
                         <th>Image</th>
-                        <th>Name</th>
+                        <th>Naam</th>
                         <th>Prijs</th>
                         <th>Acties</th>
                     </tr>

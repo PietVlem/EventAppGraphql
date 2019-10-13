@@ -4,6 +4,7 @@ import services from './services';
 export default {
     Query: {
         events: () => services.getEvents(),
+        locations: () => services.getLocations(),
         products: () => services.getProducts(),
     },
     Event: {
@@ -18,6 +19,8 @@ export default {
     },
     Mutation: {
         createProduct: (parent, {input}) => services.createProduct(parent, {input}),
-        deleteProduct: (parent, id) => services.deleteProduct(parent, id)
+        deleteProduct: (parent, id) => services.deleteProduct(parent, id),
+        createEvent: (parent, {input}) => services.createEvent(parent, {input}),
+        deleteEvent: (parent, id) => services.deleteEvent(parent, id),
     }
 };

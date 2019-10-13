@@ -51,6 +51,15 @@ function getProducts() {
         return products.docs.map(product => product.data());
     });
 }
+function getLocations() {
+    return __awaiter(this, void 0, void 0, function* () {
+        const locations = yield firebase_admin_1.default
+            .firestore()
+            .collection('Locations')
+            .get();
+        return locations.docs.map(location => location.data());
+    });
+}
 function getEventLocation(locationId) {
     return __awaiter(this, void 0, void 0, function* () {
         const eventLocation = yield firebase_admin_1.default
@@ -94,11 +103,60 @@ function deleteProduct(parent, data) {
             bucket.deleteFiles({
                 prefix: `ProductImages/${name}`
             });
-            // bucket.file(`ProductImages/${name}`).delete();
             /* Delete firestore document */
             firebase_admin_1.default.firestore().collection('Products').doc(productToBeDeleted.id).delete();
             /* Return message after deleting */
             const message = `Product: ${productToBeDeleted.data().name} has been removed`;
+            console.log(message);
+            return message;
+        })
+            .catch(err => {
+            console.log('Error getting documents', err);
+        });
+    });
+}
+function createEvent(parent, { input }) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const newEvent = {
+            "id": uuid_1.default(),
+            "name": input.name,
+            "date": input.date,
+            "image": input.image,
+            "start": input.start,
+            "end": input.end,
+            "facebook": input.facebook,
+            "details": input.details,
+            "locationId": input.locationId,
+        };
+        yield firebase_admin_1.default.firestore().collection('Events').add(newEvent);
+        return newEvent;
+    });
+}
+function deleteEvent(parent, data) {
+    return __awaiter(this, void 0, void 0, function* () {
+        yield firebase_admin_1.default.firestore()
+            .collection('Events')
+            .where('id', "==", data.id)
+            .get()
+            .then(snapshot => {
+            if (snapshot.empty) {
+                console.log('No matching documents.');
+                return;
+            }
+            const EventToBeDeleted = snapshot.docs[0];
+            const imagePath = snapshot.docs[0].data().image;
+            /* Get filename from Download-url */
+            let name = imagePath.substr(imagePath.indexOf('%2F') + 3, (imagePath.indexOf('?')) - (imagePath.indexOf('%2F') + 3));
+            name = name.replace('%20', ' ');
+            /* Delete firebase storage Image */
+            const bucket = firebase_admin_1.default.storage().bucket(process.env.FIREBASE_BUCKET);
+            bucket.deleteFiles({
+                prefix: `EventImages/${name}`
+            });
+            /* Delete firestore document */
+            firebase_admin_1.default.firestore().collection('Events').doc(EventToBeDeleted.id).delete();
+            /* Return message after deleting */
+            const message = `Events: ${EventToBeDeleted.data().name} has been removed`;
             console.log(message);
             return message;
         })
@@ -112,9 +170,12 @@ Export
 */
 exports.default = {
     getEvents,
-    getEventLocation,
+    getLocations,
     getProducts,
+    getEventLocation,
     createProduct,
     deleteProduct,
+    createEvent,
+    deleteEvent,
 };
 //# sourceMappingURL=services.js.map
