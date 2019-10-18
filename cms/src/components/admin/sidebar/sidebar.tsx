@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Coffee, Calendar, Home } from 'react-feather';
+import { Coffee, Calendar, Home, Edit } from 'react-feather';
 
 interface SidebarProps {
     type: String
@@ -11,21 +11,27 @@ const sidebar: React.FC<SidebarProps> = ({ type }) => {
         <div className="sidebar">
             <div className="wrapper">
                 <ul>
-                    <Link className={type === "Producten" ? "link--highlighted" : "link"} to="/admin/products/">
-                        <li>
-                            <Coffee/>
-                            <span>Producten</span>
-                        </li>
-                    </Link>
                     <Link className={type === "Evenementen" ? "link--highlighted" : "link"} to="/admin/events/">
                         <li>
-                            <Calendar/>
+                            <Calendar />
                             <span>Evenementen</span>
+                        </li>
+                    </Link>
+                    <Link className={type === "Posts" ? "link--highlighted" : "link"} to="/admin/events/">
+                        <li>
+                            <Edit />
+                            <span>Berichten</span>
+                        </li>
+                    </Link>
+                    <Link className={type === "Producten" ? "link--highlighted" : "link"} to="/admin/products/">
+                        <li>
+                            <Coffee />
+                            <span>Producten</span>
                         </li>
                     </Link>
                     <Link className={type === "Locaties" ? "link--highlighted" : "link"} to="/admin/locations/">
                         <li>
-                            <Home/>
+                            <Home />
                             <span>Locaties</span>
                         </li>
                     </Link>

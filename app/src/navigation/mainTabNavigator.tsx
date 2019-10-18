@@ -63,7 +63,9 @@ const TabNavigator = createBottomTabNavigator({
       borderTopWidth: 0,
       shadowOffset: { width: 0, height: -8, },
       shadowColor: 'black',
-      shadowOpacity: 0.04,
+      shadowOpacity: 0.05,
+      borderTopRightRadius: 40,
+      borderTopLeftRadius: 40,
     }
   }
 });

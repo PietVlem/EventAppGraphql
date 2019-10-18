@@ -34,10 +34,11 @@ body {
     }
 }
 
-.pointer{
+.actionIcon{
+    float: left;
     cursor: pointer;
+    margin-right: 10px,
 }
-
 /* =============================================================================
    HELPERS
    ========================================================================== */
@@ -134,7 +135,7 @@ Sidebar
                 float: left;
             }
             svg{
-                margin-right: 10px;
+                margin-right: 2 0px;
             }
         }
         .link--highlighted{
@@ -147,7 +148,7 @@ Sidebar
                 float: left;
             }
             svg{
-                margin-right: 10px;
+                margin-right: 20px;
                 color: $accent;
             }
         }

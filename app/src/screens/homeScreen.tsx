@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
+import { View, ScrollView , Text, TouchableOpacity, StyleSheet } from 'react-native'
 import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 
@@ -32,6 +32,7 @@ const GET_EVENTS = gql`
             image
             location{
                 name
+                address
                 city
                 zipcode
                 country
@@ -53,16 +54,16 @@ const homeScreen = ({ navigation }) => {
         return <Text>{`Error! ${error.message}`}</Text>;
 
     return (
-        <View style={stylesheet.container}>
+        <ScrollView style={stylesheet.container}>
             <Header />
             <Text style={styles.H1}>Evenementen</Text>
-            <Text style={stylesheet.subtitle}>Deze Maand:</Text>
+            <Text style={stylesheet.subtitle}>Opkomende</Text>
             {data.events.map(event => (
                 <TouchableOpacity key={event.id}>
                     <EventBlock navigateDetails={() => navigate(event)} eventDetails={event} />
                 </TouchableOpacity>
             ))}
-        </View>
+        </ScrollView>
     );
 }
 

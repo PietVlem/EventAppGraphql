@@ -1,7 +1,7 @@
 import React from 'react';
 import gql from 'graphql-tag';
 import { useQuery, useMutation } from '@apollo/react-hooks';
-import { XSquare } from 'react-feather';
+import { Trash, Edit2 } from 'react-feather';
 
 const GET_EVENTS = gql`
     {
@@ -59,8 +59,9 @@ const EventsData: React.FC = () => {
                         <td>{event.name}</td>
                         <td>{event.date}</td>
                         <td>{event.location.name}</td>
-                        <td>
-                            <XSquare className="pointer" onClick={() => deleteItem(event.id)} />
+                        <td className="clearfix">
+                            <Edit2 className="actionIcon"/>
+                            <Trash className="actionIcon" onClick={() => deleteItem(event.id)} />
                         </td>
                     </tr>
                 ))}

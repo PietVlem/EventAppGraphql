@@ -16,6 +16,12 @@ export default StyleSheet.create({
         fontFamily: 'Raleway-Light',
     },
     H3: {
+        fontSize: 24,
+        fontWeight: "bold",
+        color: colors.app_black,
+        fontFamily: 'Raleway-Bold',
+    },
+    H4: {
         fontSize: 20,
         fontWeight: "bold",
         color: colors.app_black,
@@ -23,6 +29,13 @@ export default StyleSheet.create({
     },
     p:{
         fontSize: 20,
+        lineHeight: 28,
         fontFamily: 'Raleway-Regular',
+    },
+    boxShadow:{
+        shadowOffset: { width: 0, height: 0, },
+        shadowColor: 'black',
+        shadowOpacity: 0.08,
+        shadowRadius: 10,
     }
 });

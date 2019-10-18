@@ -1,5 +1,6 @@
 import React from 'react'
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
+import { View, Text, TouchableOpacity, StyleSheet, Dimensions } from 'react-native'
+import Image from 'react-native-scalable-image';
 
 /*
 Constants
@@ -25,61 +26,77 @@ const eventSmall = React.memo(({ eventDetails, navigateDetails }: EventDetailPro
 
     return (
         <TouchableOpacity
-            style={stylesheet.container}
+        style={stylesheet.container}
             onPress={() => navigateDetails()}
         >
-            <View style={stylesheet.dateContainer}>
-                <Text style={stylesheet.month}>{month}</Text>
-                <Text style={stylesheet.day}>{day}</Text>
+
+            <View>
+                <View style={stylesheet.dateContainer}>
+                    <Text style={stylesheet.date}>{day}</Text>
+                    <Text style={stylesheet.dateMonth}>{month}</Text>
+                </View>
+                <Image
+                    width={Dimensions.get('window').width - 40}
+                    style={stylesheet.image}
+                    source={{ uri: eventDetails.image }}
+                />
             </View>
-            <View style={stylesheet.textContainer}>
-                <Text style={stylesheet.start}>Start: {eventDetails.start}</Text>
-                <Text style={stylesheet.name}>{eventDetails.name}</Text>
+            <View style={stylesheet.infoContainer}>
+                <Text style={stylesheet.infoTitle}>{eventDetails.name}</Text>
+                <Text style={stylesheet.infoDetails}>{eventDetails.start} - {eventDetails.end}{'\n'}{eventDetails.location.name}</Text>
             </View>
+
+        
         </TouchableOpacity>
     )
 });
 
 const stylesheet = StyleSheet.create({
     container: {
+        ...styles.boxShadow,
+        borderRadius: 25,
         backgroundColor: 'white',
-        shadowOffset: { width: 2, height: 8, },
-        shadowColor: 'black',
-        shadowOpacity: 0.04,
-        borderRadius: 10,
-        marginBottom: 20,
-        flexDirection: 'row',
+        display: "flex",
+        marginBottom: 40,
     },
-    dateContainer: {
-        backgroundColor: colors.app_primary,
-        width: 70,
+    image:{
+        borderRadius: 25,
+    },
+    dateContainer:{
+        ...styles.boxShadow,
+        backgroundColor: 'white',
+        width: 60,
+        height: 60,
+        display: "flex",
         justifyContent: 'center',
         alignItems: 'center',
-        borderBottomLeftRadius: 10,
-        borderTopLeftRadius: 10,
+        textAlign: 'center',
+        borderRadius: 10,
+        position: "absolute",
+        top: 20,
+        left: 20,
+        zIndex: 5,
     },
-    month: {
-        color: 'white',
-        fontFamily: 'Raleway-Bold',
-        fontSize: 16,
-        textTransform: 'uppercase',
+    date:{
+        fontWeight: "700",
+        fontSize: 18,
+        lineHeight: 24,
     },
-    day: {
-        color: 'white',
-        fontFamily: 'Raleway-Bold',
-        fontSize: 24,
+    dateMonth:{
+        fontWeight: "700",
+        fontSize: 18,
+        lineHeight: 24,
+        textTransform: "capitalize",
     },
-    textContainer: {
+    infoContainer:{
         padding: 20,
     },
-    start:{
-
-    },
-    name:{
+    infoTitle:{
         ...styles.H3,
-        textTransform: "uppercase",
-        fontFamily: 'Raleway-Bold',
     },
+    infoDetails:{
+        ...styles.p
+    }
 })
 
 export default eventSmall
