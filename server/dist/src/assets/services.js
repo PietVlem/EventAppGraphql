@@ -31,7 +31,7 @@ firebase_admin_1.default.initializeApp({
     credential: firebase_admin_1.default.credential.cert(serviceAccount)
 });
 /*
-Functions
+Queries
 */
 function getEvents() {
     return __awaiter(this, void 0, void 0, function* () {
@@ -70,6 +70,18 @@ function getEventLocation(locationId) {
         return eventLocation.data();
     });
 }
+function getPosts() {
+    return __awaiter(this, void 0, void 0, function* () {
+        const posts = yield firebase_admin_1.default
+            .firestore()
+            .collection('Posts')
+            .get();
+        return posts.docs.map(post => post.data());
+    });
+}
+/*
+Mutations
+*/
 function createProduct(parent, { input }) {
     return __awaiter(this, void 0, void 0, function* () {
         const newProduct = {
@@ -203,19 +215,59 @@ function deleteLocation(parent, data) {
         });
     });
 }
+function createPost(parent, { input }) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const newPost = {
+            "id": uuid_1.default(),
+            "body": input.body,
+            "postedAt": new Date().toLocaleString(),
+        };
+        yield firebase_admin_1.default.firestore().collection('Posts').add(newPost);
+        return newPost;
+    });
+}
+function deletePost(parent, data) {
+    return __awaiter(this, void 0, void 0, function* () {
+        yield firebase_admin_1.default.firestore()
+            .collection('Posts')
+            .where('id', "==", data.id)
+            .get()
+            .then(snapshot => {
+            if (snapshot.empty) {
+                console.log('No matching documents.');
+                return;
+            }
+            const postToBeDeleted = snapshot.docs[0];
+            /* Delete firestore document */
+            firebase_admin_1.default.firestore().collection('Posts').doc(postToBeDeleted.id).delete();
+            /* Return message after deleting */
+            const message = `Posts: ${postToBeDeleted.data().name} has been removed`;
+            console.log(message);
+            return message;
+        })
+            .catch(err => {
+            console.log('Error getting documents', err);
+        });
+    });
+}
 /*
 Export
 */
 exports.default = {
+    // Queries
     getEvents,
     getLocations,
     getProducts,
     getEventLocation,
+    getPosts,
+    // Mutations
     createProduct,
     deleteProduct,
     createEvent,
     deleteEvent,
     createLocation,
-    deleteLocation
+    deleteLocation,
+    createPost,
+    deletePost,
 };
 //# sourceMappingURL=services.js.map

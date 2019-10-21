@@ -19,6 +19,7 @@ exports.default = {
         events: () => services_1.default.getEvents(),
         locations: () => services_1.default.getLocations(),
         products: () => services_1.default.getProducts(),
+        posts: () => services_1.default.getPosts(),
     },
     Event: {
         location(event) {
@@ -40,6 +41,8 @@ exports.default = {
         deleteEvent: (parent, id) => services_1.default.deleteEvent(parent, id),
         createLocation: (parent, { input }) => services_1.default.createLocation(parent, { input }),
         deleteLocation: (parent, id) => services_1.default.deleteLocation(parent, id),
+        createPost: (parent, { input }) => services_1.default.createPost(parent, { input }),
+        deletePost: (parent, id) => services_1.default.deletePost(parent, id),
     }
 };
 //# sourceMappingURL=resolvers.js.map

@@ -30,7 +30,14 @@ const typeDefs = gql `
     image: String
   }
 
+  type Post {
+    id: ID
+    body: String
+    postedAt: String
+  }
+
   type Query {
+    posts: [Post],
     events: [Event],
     locations: [Location],
     products: [Product]
@@ -61,13 +68,19 @@ const typeDefs = gql `
     country: String
   }
 
+  input Postinput{
+    body: String
+  }
+
   type Mutation {
-    createProduct(input: ProductInput!): Product,
-    deleteProduct(id: String!): String,
-    createEvent(input: EventInput!): Event,
-    deleteEvent(id: String!): String,
-    createLocation(input: LocationInput!): Location,
+    createProduct(input: ProductInput!): Product
+    deleteProduct(id: String!): String
+    createEvent(input: EventInput!): Event
+    deleteEvent(id: String!): String
+    createLocation(input: LocationInput!): Location
     deleteLocation(id: String!): String
+    createPost(input: Postinput!): Post
+    deletePost(id: String!): String
   }
 `;
 exports.default = typeDefs;

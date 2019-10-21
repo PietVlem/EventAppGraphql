@@ -1,6 +1,7 @@
 import admin from 'firebase-admin';
 import * as serviceAccountJson from '../../service-account.json';
 import uuid from "uuid";
+import dayjs from 'dayjs';
 require('dotenv').config();
 
 /*
@@ -42,8 +43,14 @@ interface Product {
     image: String
 }
 
+interface Post {
+    id: String
+    body: String
+    postedAt: String
+}
+
 /*
-Functions
+Queries
 */
 async function getEvents() {
     const events = await admin
@@ -61,12 +68,12 @@ async function getProducts() {
     return products.docs.map(product => product.data()) as Product[];
 }
 
-async function getLocations(){
+async function getLocations() {
     const locations = await admin
-    .firestore()
-    .collection('Locations')
-    .get();
-return locations.docs.map(location => location.data()) as Location[];
+        .firestore()
+        .collection('Locations')
+        .get();
+    return locations.docs.map(location => location.data()) as Location[];
 }
 
 async function getEventLocation(locationId) {
@@ -78,6 +85,17 @@ async function getEventLocation(locationId) {
     return eventLocation.data() as Location[];
 }
 
+async function getPosts() {
+    const posts = await admin
+        .firestore()
+        .collection('Posts')
+        .get();
+    return posts.docs.map(post => post.data()) as Post[];
+}
+
+/* 
+Mutations
+*/
 async function createProduct(parent, { input }) {
     const newProduct: Product = {
         "id": uuid(),
@@ -103,7 +121,7 @@ async function deleteProduct(parent, data) {
             const imagePath = snapshot.docs[0].data().image;
             /* Get filename from Download-url */
             let name = imagePath.substr(imagePath.indexOf('%2F') + 3, (imagePath.indexOf('?')) - (imagePath.indexOf('%2F') + 3));
-            name = name.replace('%20',' '); 
+            name = name.replace('%20', ' ');
             /* Delete firebase storage Image */
             const bucket = admin.storage().bucket(process.env.FIREBASE_BUCKET);
             bucket.deleteFiles({
@@ -112,7 +130,7 @@ async function deleteProduct(parent, data) {
             /* Delete firestore document */
             admin.firestore().collection('Products').doc(productToBeDeleted.id).delete();
             /* Return message after deleting */
-            const message =`Product: ${productToBeDeleted.data().name} has been removed`
+            const message = `Product: ${productToBeDeleted.data().name} has been removed`
             console.log(message);
             return message;
         })
@@ -121,7 +139,7 @@ async function deleteProduct(parent, data) {
         });
 }
 
-async function createEvent(parent, {input}){
+async function createEvent(parent, { input }) {
     const newEvent: Event = {
         "id": uuid(),
         "name": input.name,
@@ -137,39 +155,39 @@ async function createEvent(parent, {input}){
     return newEvent;
 }
 
-async function deleteEvent(parent, data){
+async function deleteEvent(parent, data) {
     await admin.firestore()
-    .collection('Events')
-    .where('id', "==", data.id)
-    .get()
-    .then(snapshot => {
-        if (snapshot.empty) {
-            console.log('No matching documents.');
-            return;
-        }
-        const EventToBeDeleted = snapshot.docs[0];
-        const imagePath = snapshot.docs[0].data().image;
-        /* Get filename from Download-url */
-        let name = imagePath.substr(imagePath.indexOf('%2F') + 3, (imagePath.indexOf('?')) - (imagePath.indexOf('%2F') + 3));
-        name = name.replace('%20',' '); 
-        /* Delete firebase storage Image */
-        const bucket = admin.storage().bucket(process.env.FIREBASE_BUCKET);
-        bucket.deleteFiles({
-            prefix: `EventImages/${name}`
+        .collection('Events')
+        .where('id', "==", data.id)
+        .get()
+        .then(snapshot => {
+            if (snapshot.empty) {
+                console.log('No matching documents.');
+                return;
+            }
+            const EventToBeDeleted = snapshot.docs[0];
+            const imagePath = snapshot.docs[0].data().image;
+            /* Get filename from Download-url */
+            let name = imagePath.substr(imagePath.indexOf('%2F') + 3, (imagePath.indexOf('?')) - (imagePath.indexOf('%2F') + 3));
+            name = name.replace('%20', ' ');
+            /* Delete firebase storage Image */
+            const bucket = admin.storage().bucket(process.env.FIREBASE_BUCKET);
+            bucket.deleteFiles({
+                prefix: `EventImages/${name}`
+            });
+            /* Delete firestore document */
+            admin.firestore().collection('Events').doc(EventToBeDeleted.id).delete();
+            /* Return message after deleting */
+            const message = `Events: ${EventToBeDeleted.data().name} has been removed`
+            console.log(message);
+            return message;
+        })
+        .catch(err => {
+            console.log('Error getting documents', err);
         });
-        /* Delete firestore document */
-        admin.firestore().collection('Events').doc(EventToBeDeleted.id).delete();
-        /* Return message after deleting */
-        const message =`Events: ${EventToBeDeleted.data().name} has been removed`
-        console.log(message);
-        return message;
-    })
-    .catch(err => {
-        console.log('Error getting documents', err);
-    });
 }
 
-async function createLocation(parent, {input}){
+async function createLocation(parent, { input }) {
     const newLocation: Location = {
         "id": uuid(),
         "name": input.name,
@@ -182,43 +200,80 @@ async function createLocation(parent, {input}){
     return newLocation;
 }
 
-async function deleteLocation(parent, data){
+async function deleteLocation(parent, data) {
     await admin.firestore()
-    .collection('Locations')
-    .where('id', "==", data.id)
-    .get()
-    .then(snapshot => {
-        if (snapshot.empty) {
-            console.log('No matching documents.');
-            return;
-        }
-        const LocationsToBeDeleted = snapshot.docs[0];
-        /* Delete firestore document */
-        admin.firestore().collection('Locations').doc(LocationsToBeDeleted.id).delete();
-        /* Return message after deleting */
-        const message =`Locations: ${LocationsToBeDeleted.data().name} has been removed`
-        console.log(message);
-        return message;
-    })
-    .catch(err => {
-        console.log('Error getting documents', err);
-    });
+        .collection('Locations')
+        .where('id', "==", data.id)
+        .get()
+        .then(snapshot => {
+            if (snapshot.empty) {
+                console.log('No matching documents.');
+                return;
+            }
+            const LocationsToBeDeleted = snapshot.docs[0];
+            /* Delete firestore document */
+            admin.firestore().collection('Locations').doc(LocationsToBeDeleted.id).delete();
+            /* Return message after deleting */
+            const message = `Locations: ${LocationsToBeDeleted.data().name} has been removed`
+            console.log(message);
+            return message;
+        })
+        .catch(err => {
+            console.log('Error getting documents', err);
+        });
 }
 
+async function createPost(parent, { input }) {
+    const newPost: Post = {
+        "id": uuid(),
+        "body": input.body,
+        "postedAt": new Date().toLocaleString(),
+    }
+    await admin.firestore().collection('Posts').add(newPost);
+    return newPost;
+}
 
+async function deletePost(parent, data) {
+    await admin.firestore()
+        .collection('Posts')
+        .where('id', "==", data.id)
+        .get()
+        .then(snapshot => {
+            if (snapshot.empty) {
+                console.log('No matching documents.');
+                return;
+            }
+            const postToBeDeleted = snapshot.docs[0];
+            /* Delete firestore document */
+            admin.firestore().collection('Posts').doc(postToBeDeleted.id).delete();
+            /* Return message after deleting */
+            const message = `Posts: ${postToBeDeleted.data().name} has been removed`
+            console.log(message);
+            return message;
+        })
+        .catch(err => {
+            console.log('Error getting documents', err);
+        });
+}
 
 /*
 Export
 */
 export default {
+    // Queries
     getEvents,
     getLocations,
     getProducts,
     getEventLocation,
+    getPosts,
+
+    // Mutations
     createProduct,
     deleteProduct,
     createEvent,
     deleteEvent,
     createLocation,
-    deleteLocation
+    deleteLocation,
+    createPost,
+    deletePost,
 }

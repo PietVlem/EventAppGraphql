@@ -6,6 +6,7 @@ export default {
         events: () => services.getEvents(),
         locations: () => services.getLocations(),
         products: () => services.getProducts(),
+        posts: () => services.getPosts(),
     },
     Event: {
         async location(event) {
@@ -24,5 +25,7 @@ export default {
         deleteEvent: (parent, id) => services.deleteEvent(parent, id),
         createLocation: (parent, {input}) => services.createLocation(parent, {input}),
         deleteLocation: (parent, id) => services.deleteLocation(parent, id),
+        createPost: (parent, {input}) => services.createPost(parent, {input}),
+        deletePost: (parent, id) => services.deletePost(parent, id),
     }
 };
