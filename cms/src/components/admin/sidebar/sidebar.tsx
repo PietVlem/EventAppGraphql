@@ -17,7 +17,7 @@ const sidebar: React.FC<SidebarProps> = ({ type }) => {
                             <span>Evenementen</span>
                         </li>
                     </Link>
-                    <Link className={type === "Posts" ? "link--highlighted" : "link"} to="/admin/events/">
+                    <Link className={type === "Berichten" ? "link--highlighted" : "link"} to="/admin/posts/">
                         <li>
                             <Edit />
                             <span>Berichten</span>

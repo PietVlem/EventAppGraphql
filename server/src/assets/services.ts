@@ -1,7 +1,6 @@
 import admin from 'firebase-admin';
 import * as serviceAccountJson from '../../service-account.json';
 import uuid from "uuid";
-import dayjs from 'dayjs';
 require('dotenv').config();
 
 /*

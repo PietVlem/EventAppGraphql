@@ -10,6 +10,9 @@ import EventsPage from '../pages/admin/events/events';
 import EventsCreatePage from '../pages/admin/events/eventsCreate';
 import LocationsPage from '../pages/admin/locations/locations';
 import LocationsCreatePage from '../pages/admin/locations/locationsCreate';
+import PostsPage from '../pages/admin/posts/posts';
+import PostsCreatePage from '../pages/admin/posts/postsCreate';
+
 
 const adminRouter: React.FC = () => {
     return (
@@ -21,6 +24,8 @@ const adminRouter: React.FC = () => {
                 <Route exact path="/admin/events/create/" component={EventsCreatePage} />
                 <Route exact path="/admin/locations/" component={LocationsPage} /> 
                 <Route exact path="/admin/locations/create/" component={LocationsCreatePage} />
+                <Route exact path="/admin/posts/" component={PostsPage} /> 
+                <Route exact path="/admin/posts/create/" component={PostsCreatePage} />
             </Switch>
         </Router>
     )

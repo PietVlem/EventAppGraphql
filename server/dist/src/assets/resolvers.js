@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const apollo_server_1 = require("apollo-server");
 const services_1 = __importDefault(require("./services"));
+const dateTime_1 = __importDefault(require("./scalars/dateTime"));
 exports.default = {
     Query: {
         events: () => services_1.default.getEvents(),
@@ -43,6 +44,7 @@ exports.default = {
         deleteLocation: (parent, id) => services_1.default.deleteLocation(parent, id),
         createPost: (parent, { input }) => services_1.default.createPost(parent, { input }),
         deletePost: (parent, id) => services_1.default.deletePost(parent, id),
-    }
+    },
+    DateTime: dateTime_1.default
 };
 //# sourceMappingURL=resolvers.js.map

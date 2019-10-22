@@ -2,6 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const { gql } = require('apollo-server');
 const typeDefs = gql `
+  scalar DateTime
+
   type Location{
     id: ID
     name: String

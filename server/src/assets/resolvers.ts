@@ -1,5 +1,6 @@
 import { ApolloError } from 'apollo-server';
 import services from './services';
+import DateTime from './scalars/dateTime';
 
 export default {
     Query: {
@@ -27,5 +28,6 @@ export default {
         deleteLocation: (parent, id) => services.deleteLocation(parent, id),
         createPost: (parent, {input}) => services.createPost(parent, {input}),
         deletePost: (parent, id) => services.deletePost(parent, id),
-    }
+    },
+    DateTime: DateTime
 };
