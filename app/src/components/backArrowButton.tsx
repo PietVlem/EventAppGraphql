@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { FontAwesome } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
 
 /*
 Constants
@@ -12,24 +12,26 @@ interface backArrowHeaderProps {
     goBack: Function
 }
 
-const backArrowHeader = ({ goBack }: backArrowHeaderProps) => {
+const backArrowButton = ({ goBack }: backArrowHeaderProps) => {
     return (
         <TouchableOpacity
             style={stylesheet.container}
             onPress={() => goBack()}
         >
-            <FontAwesome name="chevron-left" size={20} color={colors.app_black} />
+            <Feather name="chevron-left" size={33} color={colors.app_primary} />
         </TouchableOpacity>
     );
 }
 
+
+
 const stylesheet = StyleSheet.create({
     container: {
         ...styles.boxShadow,
+        backgroundColor: colors.app_black,
         position: "absolute",
         width: 50,
         height: 50,
-        backgroundColor: 'white',
         borderRadius: 25,
         top: 40,
         left: 40,
@@ -40,4 +42,4 @@ const stylesheet = StyleSheet.create({
     },
 })
 
-export default backArrowHeader
+export default backArrowButton

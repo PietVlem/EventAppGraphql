@@ -55,16 +55,16 @@ const stylesheet = StyleSheet.create({
     container: {
         ...styles.boxShadow,
         borderRadius: 25,
-        backgroundColor: 'white',
-        display: "flex",
-        marginBottom: 40,
+        backgroundColor: colors.app_black,
+        flex:1,
+        marginBottom: 20,
     },
     image:{
         borderRadius: 25,
     },
     dateContainer:{
         ...styles.boxShadow,
-        backgroundColor: 'white',
+        backgroundColor: colors.app_black,
         width: 60,
         height: 60,
         display: "flex",
@@ -78,24 +78,22 @@ const stylesheet = StyleSheet.create({
         zIndex: 5,
     },
     date:{
-        fontWeight: "700",
-        fontSize: 18,
-        lineHeight: 24,
+        ...styles.H4,
+        color: colors.app_white,
     },
     dateMonth:{
-        fontWeight: "700",
-        fontSize: 18,
-        lineHeight: 24,
-        textTransform: "capitalize",
+        ...styles.H4,
+        color: colors.app_primary,
     },
     infoContainer:{
         padding: 20,
     },
     infoTitle:{
-        ...styles.H3,
+        ...styles.H2,
+        paddingBottom: 5,
     },
     infoDetails:{
-        ...styles.p
+        ...styles.p,
     }
 })
 

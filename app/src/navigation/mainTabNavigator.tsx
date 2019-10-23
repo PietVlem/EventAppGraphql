@@ -7,14 +7,21 @@ import { createBottomTabNavigator } from 'react-navigation-tabs';
 /*
 Screens
 */
-import homeScreen from '../screens/homeScreen';
+import eventScreen from '../screens/eventScreen';
 import productsScreen from '../screens/productsScreen';
 import eventDetails from '../screens/eventDetails';
+import postsScreen from '../screens/postsScreen';
 
 /*
 Components
 */
-import TabBarIconFeather from '../components/tabBarIconFeather';
+import TabBarItem from '../components/tabBarItem';
+
+/*
+Style
+*/
+import colors from '../constants/colors';
+import styles from '../constants/style';
 
 const config = Platform.select({
   web: { headerMode: 'screen' },
@@ -23,16 +30,32 @@ const config = Platform.select({
 
 const EventsStack = createStackNavigator(
   {
-    EventsOverview: homeScreen,
+    EventsOverview: eventScreen,
     EventDetails: eventDetails
   }
 );
 
 EventsStack.navigationOptions = {
   tabBarIcon: ({ focused }) => (
-    <TabBarIconFeather
+    <TabBarItem
       focused={focused}
-      name={Platform.OS === 'ios' ? `calendar` : 'calendar'}
+      title="evenementen"
+      iconName={Platform.OS === 'ios' ? `calendar` : 'calendar'}
+    />
+  ),
+}
+
+const PostStack = createStackNavigator(
+  {
+    ProductOverview: postsScreen,
+  }
+);
+
+PostStack.navigationOptions = {
+  tabBarIcon: ({ focused }) => (
+    <TabBarItem
+      focused={focused}
+      iconName={Platform.OS === 'ios' ? `message-circle` : 'message-circle'}
     />
   ),
 }
@@ -45,27 +68,32 @@ const ProductStack = createStackNavigator(
 
 ProductStack.navigationOptions = {
   tabBarIcon: ({ focused }) => (
-    <TabBarIconFeather
+    <TabBarItem
       focused={focused}
-      name={Platform.OS === 'ios' ? `map` : 'map'}
+      iconName={Platform.OS === 'ios' ? `dollar-sign` : 'dollar-sign'}
     />
   ),
 }
 
 const TabNavigator = createBottomTabNavigator({
   Events: EventsStack,
+  Posts: PostStack,
   Products: ProductStack,
 },
 {
   tabBarOptions: {
     showLabel: false,
     style: {
+      ...styles.boxShadow,
+      backgroundColor: colors.app_black,
       borderTopWidth: 0,
-      shadowOffset: { width: 0, height: -8, },
-      shadowColor: 'black',
-      shadowOpacity: 0.05,
-      borderTopRightRadius: 40,
-      borderTopLeftRadius: 40,
+      borderTopRightRadius: 30,
+      borderTopLeftRadius: 30,
+      position:'absolute',
+      bottom: 0,
+      padding: 10,
+      left: 0,
+      right: 0,
     }
   }
 });

@@ -7,7 +7,7 @@ import { Feather } from '@expo/vector-icons';
 /*
 Components
 */
-import BackArrowHeader from '../components/backArrowHeader';
+import BackArrowButton from '../components/backArrowButton';
 
 /*
 Constants
@@ -22,18 +22,19 @@ const eventDetails = ({ navigation }) => {
     }
 
     return (
-        <View>
+        <View style={stylesheet.container}>
             <View style={stylesheet.header}>
-                <BackArrowHeader goBack={goBack}/>
+                <BackArrowButton goBack={goBack}/>
                 <Image
                     width={Dimensions.get('window').width}
                     style={stylesheet.image}
                     source={{ uri: eventDetails.image }}
                 />
             </View>
-            <View style={stylesheet.container}>
+            <View style={stylesheet.contentWrapper}>
                 <View style={stylesheet.quickInfo}>
                     <Text style={stylesheet.eventName}>{eventDetails.name}</Text>
+                    <Text style={stylesheet.infotitle}>Info</Text>
                     <View style={stylesheet.infoBlock}>
                         <Feather
                             name='calendar'
@@ -63,7 +64,7 @@ const eventDetails = ({ navigation }) => {
                     </View>
                 </View>
                 <View>
-                    <Text style={stylesheet.subTitle}>Details</Text>
+                    <Text style={styles.H2}>Details</Text>
                     <Text style={styles.p}>{eventDetails.details}</Text>
                 </View>
             </View>
@@ -77,6 +78,10 @@ eventDetails.navigationOptions = {
 };
 
 const stylesheet = StyleSheet.create({
+    container:{
+        backgroundColor: colors.app_black,
+        flex: 1,
+    },
     header:{
         
     },
@@ -84,15 +89,12 @@ const stylesheet = StyleSheet.create({
         height: 500,
     },
     eventName:{
-        ...styles.H3,
-        marginBottom: 20,
+        ...styles.H1,
     },
-    container: {
+    contentWrapper: {
+        ...styles.boxShadow,
         position: 'relative',
-        backgroundColor: 'white',
-        shadowOffset: { width: 0, height: -8, },
-        shadowColor: 'black',
-        shadowOpacity: 0.05,
+        backgroundColor: colors.app_black,
         top: -22,
         borderTopRightRadius: 30,
         borderTopLeftRadius: 30,
@@ -100,10 +102,14 @@ const stylesheet = StyleSheet.create({
         paddingLeft: 40,
         paddingRight: 40,
         zIndex: 2,
+        flex: 1,
     },
     quickInfo:{
         marginTop: 20,
         marginBottom: 40,
+    },
+    infotitle:{
+        ...styles.H2,
     },
     infoBlock:{
         flexDirection: 'row',
@@ -112,10 +118,11 @@ const stylesheet = StyleSheet.create({
     },
     infoBlockIcon:{
         marginRight: 20,
-        color: colors.app_black,
+        color: colors.app_white,
     },
     address:{
         ...styles.p,
+        color: colors.app_white,
     },
     subTitle:{
         ...styles.H3,
