@@ -90,6 +90,7 @@ const stylesheet = StyleSheet.create({
     },
     eventName:{
         ...styles.H1,
+        paddingBottom: 40,
     },
     contentWrapper: {
         ...styles.boxShadow,

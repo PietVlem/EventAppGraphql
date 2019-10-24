@@ -17,10 +17,10 @@ export default StyleSheet.create({
         paddingBottom: 20,
     },
     H3: {
-        fontSize: 24,
-        fontWeight: "bold",
-        color: colors.app_black,
+        fontSize: 22,
+        color: colors.app_primary,
         fontFamily: 'Raleway-Bold',
+        paddingBottom: 20,
     },
     H4: {
         fontFamily: 'Raleway-Black',
