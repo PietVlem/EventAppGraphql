@@ -40,6 +40,7 @@ const postsScreen = () => {
                 {data.posts.map(post => (
                     <PostBlock key={post.id} post={post}/>
                 ))}
+                <View style={stylesheet.bottomSpace} />
             </ScrollView>
         </View>
     );
@@ -56,6 +57,10 @@ const stylesheet = StyleSheet.create({
     },
     postsWrapper:{
         padding: 20,
+        marginBottom: 60,
+    },
+    bottomSpace:{
+        height: 40,
     }
 })
 

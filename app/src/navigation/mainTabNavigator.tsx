@@ -89,9 +89,9 @@ const TabNavigator = createBottomTabNavigator({
       borderTopWidth: 0,
       borderTopRightRadius: 30,
       borderTopLeftRadius: 30,
+      padding: 10,
       position:'absolute',
       bottom: 0,
-      padding: 10,
       left: 0,
       right: 0,
     }

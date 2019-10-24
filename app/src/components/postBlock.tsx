@@ -15,7 +15,7 @@ const postBlock = (props) => {
                 style={stylesheet.icon}
                 color={colors.app_primary}
             />
-            <View>
+            <View style={stylesheet.textContainer}>
                 <Text style={stylesheet.body}>{props.post.body}</Text>
                 <Text style={stylesheet.date}>{props.post.postedAt}</Text>
             </View>
@@ -31,10 +31,14 @@ const stylesheet = StyleSheet.create({
         padding: 20,
         marginBottom: 20,
         borderRadius: 20,
+        flex: 1,
         flexDirection: "row",
     },
     icon:{
-        paddingRight: 20,
+        flex: 1,
+    },
+    textContainer:{
+        flex: 6,
     },
     body:{
         ...styles.H3,

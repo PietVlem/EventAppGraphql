@@ -63,7 +63,9 @@ const homeScreen = ({ navigation }) => {
                         <EventBlock navigateDetails={() => navigate(event)} eventDetails={event} />
                     </TouchableOpacity>
                 ))}
+                <View style={stylesheet.bottomSpace} />
             </ScrollView>
+            
         </View>
     );
 }
@@ -75,9 +77,14 @@ homeScreen.navigationOptions = {
 const stylesheet = StyleSheet.create({
     container: {
         backgroundColor: colors.app_black,
+        flex: 1,
     },
     eventWrapper:{
         padding: 20,
+        marginBottom: 60,
+    },
+    bottomSpace:{
+        height: 40,
     }
 })
 

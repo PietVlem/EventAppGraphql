@@ -41,6 +41,7 @@ const ProductScreen = () => {
                 {data.products.map(product => (
                     <ProductBlock key={product.id} product={product} />
                 ))}
+                <View style={stylesheet.bottomSpace} />
             </ScrollView>
         </View>
     );
@@ -57,6 +58,10 @@ const stylesheet = StyleSheet.create({
     },
     productsWrapper:{
         padding: 20,
+        marginBottom: 60,
+    },
+    bottomSpace:{
+        height: 40,
     }
 })
 
