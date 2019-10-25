@@ -44,14 +44,14 @@ const stylesheet = StyleSheet.create({
         flexDirection: "row",
     },
     imageContainer:{
-        flex: 1,
+        flex: 2,
         alignItems: 'center',
     },
     image:{
         flex: 1,
     },
     textContainer:{
-        flex: 3,
+        flex: 5,
     },
 })
 

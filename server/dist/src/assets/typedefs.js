@@ -84,6 +84,10 @@ const typeDefs = gql `
     createPost(input: Postinput!): Post
     deletePost(id: String!): String
   }
+
+  type Subscription {
+    newPost: Post!
+  }
 `;
 exports.default = typeDefs;
 //# sourceMappingURL=typedefs.js.map

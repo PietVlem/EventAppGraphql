@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from '@apollo/react-hooks';
+import apolloClient from './apollo/apollo';
 
 /* 
 Components 
@@ -17,9 +17,6 @@ Style
 */
 import './sass/index.scss';
 
-const client = new ApolloClient({
-  uri: 'http://localhost:4000/',
-});
 
 const App: React.FC = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -30,7 +27,7 @@ const App: React.FC = () => {
   }, [isLoggedIn])
 
   return (
-    <ApolloProvider client={client}>
+    <ApolloProvider client={apolloClient}>
       {!isLoggedIn &&
         <Login loggingIn={setIsLoggedIn} />
       }

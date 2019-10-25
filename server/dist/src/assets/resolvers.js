@@ -42,8 +42,13 @@ exports.default = {
         deleteEvent: (parent, id) => services_1.default.deleteEvent(parent, id),
         createLocation: (parent, { input }) => services_1.default.createLocation(parent, { input }),
         deleteLocation: (parent, id) => services_1.default.deleteLocation(parent, id),
-        createPost: (parent, { input }) => services_1.default.createPost(parent, { input }),
+        createPost: (parent, { input }, { pubsub }) => services_1.default.createPost(parent, { input }, { pubsub }),
         deletePost: (parent, id) => services_1.default.deletePost(parent, id),
+    },
+    Subscription: {
+        newPost: {
+            subscribe: (_, __, { pubsub }) => pubsub.asyncIterator('NEW_POST')
+        }
     },
     DateTime: dateTime_1.default
 };

@@ -222,13 +222,14 @@ async function deleteLocation(parent, data) {
         });
 }
 
-async function createPost(parent, { input }) {
+async function createPost(parent, { input }, {pubsub}) {
     const newPost: Post = {
         "id": uuid(),
         "body": input.body,
         "postedAt": new Date().toLocaleString(),
     }
     await admin.firestore().collection('Posts').add(newPost);
+    pubsub.publish('NEW_POST', { newPost });
     return newPost;
 }
 

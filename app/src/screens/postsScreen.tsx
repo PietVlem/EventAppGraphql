@@ -8,6 +8,7 @@ Components
 */
 import Header from '../components/header';
 import PostBlock from '../components/postBlock';
+import PostSubscription from '../components/postSubscription';
 
 /*
 Constants
@@ -37,6 +38,7 @@ const postsScreen = () => {
         <View style={stylesheet.container}>
             <Header title="Berichten"/>
             <ScrollView style={stylesheet.postsWrapper}>
+                <PostSubscription />
                 {data.posts.map(post => (
                     <PostBlock key={post.id} post={post}/>
                 ))}

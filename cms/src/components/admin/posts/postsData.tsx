@@ -3,8 +3,10 @@ import gql from 'graphql-tag';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { Trash, Edit2 } from 'react-feather';
 
-const GET_POSTS = gql`
-  {
+import PostSubscription from './postSubscription';
+
+const POSTS_QUERY = gql`
+  query Post{
     posts {
         id
         body
@@ -20,7 +22,7 @@ const DELETE_POST = gql`
 `;
 
 const PostsData: React.FC = () => {
-    const { loading, error, data } = useQuery(GET_POSTS);
+    const { loading, error, data } = useQuery(POSTS_QUERY);
     const [deletePostMutation] = useMutation(DELETE_POST);
 
     if (loading) return <p>Loading...</p>;
@@ -42,14 +44,15 @@ const PostsData: React.FC = () => {
                     </tr>
                 </thead>
                 <tbody>
+                    <PostSubscription />
                     {data.posts.map((post: any) => (
-                            <tr key={post.id}>
-                                <td>{post.body}</td>
-                                <td>{post.postedAt}</td>
-                                <td>
-                                    <Trash className="pointer" onClick={()=>deleteItem(post.id)}/>
-                                </td>
-                            </tr>
+                        <tr key={post.id}>
+                            <td>{post.body}</td>
+                            <td>{post.postedAt}</td>
+                            <td>
+                                <Trash className="pointer" onClick={()=>deleteItem(post.id)}/>
+                            </td>
+                        </tr>
                     ))}
                 </tbody>
             </table>

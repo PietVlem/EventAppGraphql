@@ -83,6 +83,10 @@ const typeDefs = gql`
     createPost(input: Postinput!): Post
     deletePost(id: String!): String
   }
+
+  type Subscription {
+    newPost: Post!
+  }
 `;
 
 export default typeDefs;

@@ -215,7 +215,7 @@ function deleteLocation(parent, data) {
         });
     });
 }
-function createPost(parent, { input }) {
+function createPost(parent, { input }, { pubsub }) {
     return __awaiter(this, void 0, void 0, function* () {
         const newPost = {
             "id": uuid_1.default(),
@@ -223,6 +223,7 @@ function createPost(parent, { input }) {
             "postedAt": new Date().toLocaleString(),
         };
         yield firebase_admin_1.default.firestore().collection('Posts').add(newPost);
+        pubsub.publish('NEW_POST', { newPost });
         return newPost;
     });
 }
