@@ -19,7 +19,6 @@ const PostsForm: React.FC = () => {
 
     const handleSubmit = async (event: any) => {
         event.preventDefault();
-        console.log(PostBody);
         await createLocationMutation({ variables: { body: PostBody }})
         setPostBody('')
         setSatus(`Bericht is toegevoegd!`);

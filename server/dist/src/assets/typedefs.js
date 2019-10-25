@@ -80,13 +80,16 @@ const typeDefs = gql `
     createEvent(input: EventInput!): Event
     deleteEvent(id: String!): String
     createLocation(input: LocationInput!): Location
-    deleteLocation(id: String!): String
+    deleteLocation(id: String!): Location
     createPost(input: Postinput!): Post
-    deletePost(id: String!): String
+    deletePost(id: String!): Post
   }
 
   type Subscription {
     newPost: Post!
+    deletePost: Post!
+    newLocation: Location!
+    deleteLocation: Location!
   }
 `;
 exports.default = typeDefs;

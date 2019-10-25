@@ -17,7 +17,13 @@ const GET_LOCATIONS = gql`
 
 const DELETE_LOCATION = gql`
     mutation DeleteLocation($id: String!){
-        deleteLocation(id: $id)
+        deleteLocation(id: $id){
+            id
+            name
+            address
+            zipcode
+            city
+        }
     }
 `;
 

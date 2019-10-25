@@ -36,18 +36,27 @@ exports.default = {
         }
     },
     Mutation: {
-        createProduct: (parent, { input }) => services_1.default.createProduct(parent, { input }),
-        deleteProduct: (parent, id) => services_1.default.deleteProduct(parent, id),
-        createEvent: (parent, { input }) => services_1.default.createEvent(parent, { input }),
-        deleteEvent: (parent, id) => services_1.default.deleteEvent(parent, id),
-        createLocation: (parent, { input }) => services_1.default.createLocation(parent, { input }),
-        deleteLocation: (parent, id) => services_1.default.deleteLocation(parent, id),
-        createPost: (parent, { input }, { pubsub }) => services_1.default.createPost(parent, { input }, { pubsub }),
-        deletePost: (parent, id) => services_1.default.deletePost(parent, id),
+        createProduct: (_, { input }) => services_1.default.createProduct({ input }),
+        deleteProduct: (_, id) => services_1.default.deleteProduct(id),
+        createEvent: (_, { input }) => services_1.default.createEvent({ input }),
+        deleteEvent: (_, id) => services_1.default.deleteEvent(id),
+        createLocation: (_, { input }, { pubsub }) => services_1.default.createLocation({ input }, { pubsub }),
+        deleteLocation: (_, id, { pubsub }) => services_1.default.deleteLocation(id, { pubsub }),
+        createPost: (_, { input }, { pubsub }) => services_1.default.createPost({ input }, { pubsub }),
+        deletePost: (_, id, { pubsub }) => services_1.default.deletePost(id, { pubsub }),
     },
     Subscription: {
         newPost: {
-            subscribe: (_, __, { pubsub }) => pubsub.asyncIterator('NEW_POST')
+            subscribe: (_, __, { pubsub }) => pubsub.asyncIterator('NEW_POST'),
+        },
+        deletePost: {
+            subscribe: (_, __, { pubsub }) => pubsub.asyncIterator('DELETE_POST'),
+        },
+        newLocation: {
+            subscribe: (_, __, { pubsub }) => pubsub.asyncIterator('NEW_LOCATION'),
+        },
+        deleteLocation: {
+            subscribe: (_, __, { pubsub }) => pubsub.asyncIterator('DELETE_LOCATION'),
         }
     },
     DateTime: dateTime_1.default

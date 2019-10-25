@@ -82,7 +82,7 @@ function getPosts() {
 /*
 Mutations
 */
-function createProduct(parent, { input }) {
+function createProduct({ input }) {
     return __awaiter(this, void 0, void 0, function* () {
         const newProduct = {
             "id": uuid_1.default(),
@@ -94,7 +94,7 @@ function createProduct(parent, { input }) {
         return newProduct;
     });
 }
-function deleteProduct(parent, data) {
+function deleteProduct(data) {
     return __awaiter(this, void 0, void 0, function* () {
         yield firebase_admin_1.default.firestore()
             .collection('Products')
@@ -127,7 +127,7 @@ function deleteProduct(parent, data) {
         });
     });
 }
-function createEvent(parent, { input }) {
+function createEvent({ input }) {
     return __awaiter(this, void 0, void 0, function* () {
         const newEvent = {
             "id": uuid_1.default(),
@@ -144,7 +144,7 @@ function createEvent(parent, { input }) {
         return newEvent;
     });
 }
-function deleteEvent(parent, data) {
+function deleteEvent(data) {
     return __awaiter(this, void 0, void 0, function* () {
         yield firebase_admin_1.default.firestore()
             .collection('Events')
@@ -177,7 +177,7 @@ function deleteEvent(parent, data) {
         });
     });
 }
-function createLocation(parent, { input }) {
+function createLocation({ input }, { pubsub }) {
     return __awaiter(this, void 0, void 0, function* () {
         const newLocation = {
             "id": uuid_1.default(),
@@ -188,12 +188,13 @@ function createLocation(parent, { input }) {
             "zipcode": input.zipcode,
         };
         yield firebase_admin_1.default.firestore().collection('Locations').add(newLocation);
+        pubsub.publish('NEW_LOCATION', { newLocation });
         return newLocation;
     });
 }
-function deleteLocation(parent, data) {
+function deleteLocation(data, { pubsub }) {
     return __awaiter(this, void 0, void 0, function* () {
-        yield firebase_admin_1.default.firestore()
+        const location = yield firebase_admin_1.default.firestore()
             .collection('Locations')
             .where('id', "==", data.id)
             .get()
@@ -206,16 +207,19 @@ function deleteLocation(parent, data) {
             /* Delete firestore document */
             firebase_admin_1.default.firestore().collection('Locations').doc(LocationsToBeDeleted.id).delete();
             /* Return message after deleting */
-            const message = `Locations: ${LocationsToBeDeleted.data().name} has been removed`;
+            const message = `Location - ${LocationsToBeDeleted.data().name} - has been removed`;
             console.log(message);
-            return message;
+            const deletedLocation = LocationsToBeDeleted.data();
+            pubsub.publish('DELETE_LOCATION', { deletedLocation });
+            return deletedLocation;
         })
             .catch(err => {
             console.log('Error getting documents', err);
         });
+        return location;
     });
 }
-function createPost(parent, { input }, { pubsub }) {
+function createPost({ input }, { pubsub }) {
     return __awaiter(this, void 0, void 0, function* () {
         const newPost = {
             "id": uuid_1.default(),
@@ -227,9 +231,9 @@ function createPost(parent, { input }, { pubsub }) {
         return newPost;
     });
 }
-function deletePost(parent, data) {
+function deletePost(data, { pubsub }) {
     return __awaiter(this, void 0, void 0, function* () {
-        yield firebase_admin_1.default.firestore()
+        const post = yield firebase_admin_1.default.firestore()
             .collection('Posts')
             .where('id', "==", data.id)
             .get()
@@ -242,13 +246,17 @@ function deletePost(parent, data) {
             /* Delete firestore document */
             firebase_admin_1.default.firestore().collection('Posts').doc(postToBeDeleted.id).delete();
             /* Return message after deleting */
-            const message = `Posts: ${postToBeDeleted.data().name} has been removed`;
+            const message = `Post with body - ${postToBeDeleted.data().body} - has been removed`;
             console.log(message);
-            return message;
+            const deletedPost = postToBeDeleted.data();
+            console.log(deletedPost);
+            pubsub.publish('DELETE_POST', { deletedPost });
+            return deletedPost;
         })
             .catch(err => {
             console.log('Error getting documents', err);
         });
+        return post;
     });
 }
 /*

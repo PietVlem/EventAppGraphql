@@ -95,7 +95,7 @@ async function getPosts() {
 /* 
 Mutations
 */
-async function createProduct(parent, { input }) {
+async function createProduct({ input }) {
     const newProduct: Product = {
         "id": uuid(),
         "name": input.name,
@@ -106,7 +106,7 @@ async function createProduct(parent, { input }) {
     return newProduct;
 }
 
-async function deleteProduct(parent, data) {
+async function deleteProduct(data) {
     await admin.firestore()
         .collection('Products')
         .where('id', "==", data.id)
@@ -138,7 +138,7 @@ async function deleteProduct(parent, data) {
         });
 }
 
-async function createEvent(parent, { input }) {
+async function createEvent({ input }) {
     const newEvent: Event = {
         "id": uuid(),
         "name": input.name,
@@ -151,10 +151,10 @@ async function createEvent(parent, { input }) {
         "locationId": input.locationId,
     }
     await admin.firestore().collection('Events').add(newEvent);
-    return newEvent;
+    return newEvent as Event;
 }
 
-async function deleteEvent(parent, data) {
+async function deleteEvent(data) {
     await admin.firestore()
         .collection('Events')
         .where('id', "==", data.id)
@@ -186,7 +186,7 @@ async function deleteEvent(parent, data) {
         });
 }
 
-async function createLocation(parent, { input }) {
+async function createLocation({ input }, {pubsub}) {
     const newLocation: Location = {
         "id": uuid(),
         "name": input.name,
@@ -196,11 +196,12 @@ async function createLocation(parent, { input }) {
         "zipcode": input.zipcode,
     }
     await admin.firestore().collection('Locations').add(newLocation);
-    return newLocation;
+    pubsub.publish('NEW_LOCATION', { newLocation })
+    return newLocation as Location;
 }
 
-async function deleteLocation(parent, data) {
-    await admin.firestore()
+async function deleteLocation(data, { pubsub }) {
+    const location = await admin.firestore()
         .collection('Locations')
         .where('id', "==", data.id)
         .get()
@@ -213,16 +214,19 @@ async function deleteLocation(parent, data) {
             /* Delete firestore document */
             admin.firestore().collection('Locations').doc(LocationsToBeDeleted.id).delete();
             /* Return message after deleting */
-            const message = `Locations: ${LocationsToBeDeleted.data().name} has been removed`
+            const message = `Location - ${LocationsToBeDeleted.data().name} - has been removed`
             console.log(message);
-            return message;
+            const deletedLocation = LocationsToBeDeleted.data();
+            pubsub.publish('DELETE_LOCATION', { deletedLocation })
+            return deletedLocation as Location;
         })
         .catch(err => {
             console.log('Error getting documents', err);
         });
+    return location;
 }
 
-async function createPost(parent, { input }, {pubsub}) {
+async function createPost({ input }, {pubsub}) {
     const newPost: Post = {
         "id": uuid(),
         "body": input.body,
@@ -233,8 +237,8 @@ async function createPost(parent, { input }, {pubsub}) {
     return newPost;
 }
 
-async function deletePost(parent, data) {
-    await admin.firestore()
+async function deletePost(data , {pubsub}) {
+    const post = await admin.firestore()
         .collection('Posts')
         .where('id', "==", data.id)
         .get()
@@ -247,13 +251,17 @@ async function deletePost(parent, data) {
             /* Delete firestore document */
             admin.firestore().collection('Posts').doc(postToBeDeleted.id).delete();
             /* Return message after deleting */
-            const message = `Posts: ${postToBeDeleted.data().name} has been removed`
+            const message = `Post with body - ${postToBeDeleted.data().body} - has been removed`
             console.log(message);
-            return message;
+            const deletedPost = postToBeDeleted.data();
+            console.log(deletedPost);
+            pubsub.publish('DELETE_POST', { deletedPost });
+            return deletedPost as Post;
         })
         .catch(err => {
             console.log('Error getting documents', err);
         });
+    return post;
 }
 
 /*

@@ -20,18 +20,27 @@ export default {
         }
     },
     Mutation: {
-        createProduct: (parent, {input}) => services.createProduct(parent, {input}),
-        deleteProduct: (parent, id) => services.deleteProduct(parent, id),
-        createEvent: (parent, {input}) => services.createEvent(parent, {input}),
-        deleteEvent: (parent, id) => services.deleteEvent(parent, id),
-        createLocation: (parent, {input}) => services.createLocation(parent, {input}),
-        deleteLocation: (parent, id) => services.deleteLocation(parent, id),
-        createPost: (parent, {input}, {pubsub}) => services.createPost(parent, {input}, {pubsub}),
-        deletePost: (parent, id) => services.deletePost(parent, id),
+        createProduct: (_, {input}) => services.createProduct({input}),
+        deleteProduct: (_, id) => services.deleteProduct(id),
+        createEvent: (_, {input}) => services.createEvent({input}),
+        deleteEvent: (_, id) => services.deleteEvent(id),
+        createLocation: (_, {input}, {pubsub}) => services.createLocation({input}, {pubsub}),
+        deleteLocation: (_, id, {pubsub}) => services.deleteLocation(id , {pubsub}),
+        createPost: (_, {input}, {pubsub}) => services.createPost({input}, {pubsub}),
+        deletePost: (_, id , {pubsub}) => services.deletePost(id, { pubsub }),
     },
     Subscription: {
         newPost:{
-            subscribe: (_, __, {pubsub}) => pubsub.asyncIterator('NEW_POST')
+            subscribe: (_, __, {pubsub}) => pubsub.asyncIterator('NEW_POST'),
+        },
+        deletePost:{
+            subscribe: (_, __, {pubsub}) => pubsub.asyncIterator('DELETE_POST'),
+        },
+        newLocation: {
+            subscribe: (_, __, {pubsub}) => pubsub.asyncIterator('NEW_LOCATION'),
+        },
+        deleteLocation: {
+            subscribe: (_, __, {pubsub}) => pubsub.asyncIterator('DELETE_LOCATION'),
         }
     },
     DateTime: DateTime
