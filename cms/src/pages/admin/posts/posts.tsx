@@ -4,7 +4,7 @@ import React from 'react';
 Components
 */
 import AdminLayout from '../../../layouts/adminLayout';
-import PostData from '../../../components/admin/posts/postDataTest';
+import PostData from '../../../components/admin/posts/postsData';
 
 /*
 Typevars
