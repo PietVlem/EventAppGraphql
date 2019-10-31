@@ -1,4 +1,4 @@
-import React, { useEffect, Component } from 'react';
+import React from 'react';
 import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
 
@@ -17,7 +17,7 @@ const POSTS_QUERY = gql`
   }
 `;
 
-const POSTS_SUBSCRIPTION = gql`
+const NEW_POSTS_SUBSCRIPTION = gql`
     subscription{
         newPost{
             id
@@ -27,11 +27,25 @@ const POSTS_SUBSCRIPTION = gql`
     }
 `;
 
+/* const DELETE_POSTS_SUBSCRIPTION = gql`
+    subscription{
+        deletePost{
+            id
+            body
+            postedAt
+        }
+    }
+`; */
+
 const PostsData: React.FC = () => {
     const { subscribeToMore, ...result } = useQuery(POSTS_QUERY);
 
     if (result.loading) return <p>Loading...</p>;
     if (result.error) return <p>Error! {result.error.message}</p>;
+
+    const removeElement = (id: string) => {
+        console.log(id);
+    }
 
     return (
         <React.Fragment>
@@ -47,7 +61,7 @@ const PostsData: React.FC = () => {
                     {...result}
                     subscribeToNewPosts={() =>
                         subscribeToMore({
-                            document: POSTS_SUBSCRIPTION,
+                            document: NEW_POSTS_SUBSCRIPTION,
                             updateQuery: (prev, { subscriptionData }) => {
                                 if (!subscriptionData.data) return prev;
                                 const newPost = subscriptionData.data.newPost;
@@ -58,6 +72,8 @@ const PostsData: React.FC = () => {
                             }
                         })
                     }
+                    
+                    removeElement={removeElement}
                 />
             </table>
         </React.Fragment>

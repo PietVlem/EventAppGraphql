@@ -1,4 +1,4 @@
-import React, { useEffect, Component } from 'react';
+import React, { useEffect } from 'react';
 import gql from 'graphql-tag';
 import { useMutation } from '@apollo/react-hooks';
 import { Trash, Edit2 } from 'react-feather';
@@ -14,7 +14,7 @@ mutation DeletePost($id: String!){
 `;
 
 const Post = (props: any) => {
-    const [deletePostMutation, { data }] = useMutation(DELETE_POST);
+    const [deletePostMutation] = useMutation(DELETE_POST);
 
     useEffect(() => {
         props.subscribeToNewPosts();
@@ -27,9 +27,10 @@ const Post = (props: any) => {
         })
         return props.data.posts = filteredArray; */
         window.location.reload();
+        //props.removeElement(postId);
     }
 
-    if (props.data != undefined)
+    if (props.data !== undefined)
         return (
             <tbody>
                 {props.data.posts.map((post: any) => (
