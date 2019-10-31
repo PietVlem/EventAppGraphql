@@ -4,6 +4,7 @@
   "main": "dist/server.js",
   "license": "MIT",
   "dependencies": {
+    "@types/express": "^4.17.1",
     "@types/node": "^12.7.5",
     "apollo-server": "^2.9.3",
     "dotenv": "^8.1.0",
@@ -19,6 +20,7 @@
     "uuid": "^3.3.3"
   },
   "scripts": {
-    "dev": "nodemon dist/src/server.js"
+    "dev": "(cd ../cms && yarn start) & nodemon src/server.ts",
+    "ts": "tsc --watch"
   }
 }

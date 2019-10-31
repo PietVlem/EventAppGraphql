@@ -213,9 +213,7 @@ async function deleteLocation(data, { pubsub }) {
             const LocationsToBeDeleted = snapshot.docs[0];
             /* Delete firestore document */
             admin.firestore().collection('Locations').doc(LocationsToBeDeleted.id).delete();
-            /* Return message after deleting */
-            const message = `Location - ${LocationsToBeDeleted.data().name} - has been removed`
-            console.log(message);
+            console.log(`Location - ${LocationsToBeDeleted.data().name} - has been removed`);
             const deletedLocation = LocationsToBeDeleted.data();
             pubsub.publish('DELETE_LOCATION', { deletedLocation })
             return deletedLocation as Location;
@@ -249,12 +247,10 @@ async function deletePost(data , {pubsub}) {
             }
             const postToBeDeleted = snapshot.docs[0];
             /* Delete firestore document */
-            admin.firestore().collection('Posts').doc(postToBeDeleted.id).delete();
+            /* admin.firestore().collection('Posts').doc(postToBeDeleted.id).delete(); */
             /* Return message after deleting */
-            const message = `Post with body - ${postToBeDeleted.data().body} - has been removed`
-            console.log(message);
             const deletedPost = postToBeDeleted.data();
-            console.log(deletedPost);
+            console.log(`Post with body - ${postToBeDeleted.data().body} - has been removed`);
             pubsub.publish('DELETE_POST', { deletedPost });
             return deletedPost as Post;
         })
