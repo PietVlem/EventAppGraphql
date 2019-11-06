@@ -22,12 +22,7 @@ const Post = (props: any) => {
 
     const deleteItem = async (postId: String) => {
         await deletePostMutation({ variables: { id: postId } });
-        /* const filteredArray = props.data.posts.find((post: any)=>{
-            return post.id != postId;
-        })
-        return props.data.posts = filteredArray; */
         window.location.reload();
-        //props.removeElement(postId);
     }
 
     if (props.data !== undefined)

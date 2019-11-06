@@ -27,16 +27,6 @@ const NEW_POSTS_SUBSCRIPTION = gql`
     }
 `;
 
-/* const DELETE_POSTS_SUBSCRIPTION = gql`
-    subscription{
-        deletePost{
-            id
-            body
-            postedAt
-        }
-    }
-`; */
-
 const PostsData: React.FC = () => {
     const { subscribeToMore, ...result } = useQuery(POSTS_QUERY);
 
@@ -65,6 +55,7 @@ const PostsData: React.FC = () => {
                             updateQuery: (prev, { subscriptionData }) => {
                                 if (!subscriptionData.data) return prev;
                                 const newPost = subscriptionData.data.newPost;
+                                console.log(newPost);
                                 return Object.assign({}, prev, {
                                     posts: [newPost, ...prev.posts]
                                 });
@@ -72,7 +63,6 @@ const PostsData: React.FC = () => {
                             }
                         })
                     }
-                    
                     removeElement={removeElement}
                 />
             </table>
