@@ -3,6 +3,13 @@ const { gql } = require('apollo-server');
 const typeDefs = gql`
   scalar DateTime
 
+  type User {
+    id: ID!
+    email: String!
+    name: String!
+    password: String!
+  }
+
   type Location{
     id: ID
     name: String
@@ -38,9 +45,10 @@ const typeDefs = gql`
   }
 
   type Query {
-    posts: [Post],
-    events: [Event],
-    locations: [Location],
+    me: User
+    posts: [Post]
+    events: [Event]
+    locations: [Location]
     products: [Product]
   }
 

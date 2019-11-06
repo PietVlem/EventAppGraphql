@@ -247,7 +247,7 @@ async function deletePost(data , {pubsub}) {
             }
             const postToBeDeleted = snapshot.docs[0];
             /* Delete firestore document */
-            /* admin.firestore().collection('Posts').doc(postToBeDeleted.id).delete(); */
+            admin.firestore().collection('Posts').doc(postToBeDeleted.id).delete();
             /* Return message after deleting */
             const deletedPost = postToBeDeleted.data();
             console.log(`Post with body - ${postToBeDeleted.data().body} - has been removed`);
@@ -257,6 +257,7 @@ async function deletePost(data , {pubsub}) {
         .catch(err => {
             console.log('Error getting documents', err);
         });
+    console.log(post);
     return post;
 }
 
